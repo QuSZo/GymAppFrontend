@@ -1,0 +1,12 @@
+@import "@/styles/variables.module";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .dayPicker {
+    position: sticky;
+    top: $height-navigation;
+  }
+}

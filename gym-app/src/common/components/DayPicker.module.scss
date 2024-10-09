@@ -1,0 +1,19 @@
+@import "@/styles/variables.module";
+
+.main {
+  display: flex;
+  justify-content: center;
+  background-color: $color-secondary;
+
+  .mainWrapper {
+    display: flex;
+    justify-content: center;
+    width: calc($width-day-element * 7);
+    overflow: hidden;
+  }
+
+  .mainWrapperFloating {
+    display: flex;
+    transition: translate 0.5s ease-in-out;
+  }
+}

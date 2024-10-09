@@ -1,0 +1,60 @@
+@import "@/styles/variables.module";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: $width-day-element;
+
+  .mainShield {
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-primary;
+    height: 40px;
+    aspect-ratio: 1;
+    clip-path: polygon(
+      30% 0%,
+      70% 0%,
+      100% 30%,
+      100% 70%,
+      70% 100%,
+      30% 100%,
+      0% 70%,
+      0% 30%
+    );
+
+    .mainShieldContent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $color-border;
+      height: 30px;
+      aspect-ratio: 1;
+      clip-path: polygon(
+        30% 0%,
+        70% 0%,
+        100% 30%,
+        100% 70%,
+        70% 100%,
+        30% 100%,
+        0% 70%,
+        0% 30%
+      );
+    }
+
+    &:hover {
+      background-color: blueviolet;
+      cursor: pointer;
+      .mainShieldContent {
+        background-color: blueviolet;
+        cursor: pointer;
+      }
+    }
+  }
+}
