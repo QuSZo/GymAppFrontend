@@ -1,6 +1,13 @@
 import { useMemo, useRef, useState } from "react";
 
-function generateDates(currentDate: Date): Date[] {
+type DateWithSelect = {
+  date: Date;
+  selected: boolean;
+};
+
+const TRANSITION_STYLE = "translate 0.5s ease-in-out";
+
+function generateDatesWithSelect(currentDate: Date): DateWithSelect[] {
   const currentDateTemp = new Date(currentDate);
   const firstDay = new Date(
     currentDateTemp.setDate(currentDateTemp.getDate() - 6),
@@ -9,46 +16,46 @@ function generateDates(currentDate: Date): Date[] {
     currentDateTemp.setDate(currentDateTemp.getDate() + 12),
   );
 
-  const dates: Date[] = [];
+  const dates: DateWithSelect[] = [];
   while (firstDay <= lastDay) {
-    dates.push(new Date(firstDay));
+    dates.push({
+      date: new Date(firstDay),
+      selected: firstDay.getTime() == currentDate.getTime(),
+    });
     firstDay.setDate(firstDay.getDate() + 1);
   }
 
   return dates;
 }
 
-function translateValue(currentDate: Date, prevDate: Date) {
+function translateValue(currentDate: Date, prevDate: Date): number {
   const dayElementWidth = 60;
-  const fromMillisecondsToDaysMultiplier = 1000 * 60 * 60 * 24;
-  return (
-    ((currentDate - prevDate) / fromMillisecondsToDaysMultiplier) *
-    dayElementWidth
-  );
+  const millisecondsInDay = 1000 * 60 * 60 * 24;
+  const daysDifference =
+    (currentDate.getTime() - prevDate.getTime()) / millisecondsInDay;
+  return daysDifference * dayElementWidth;
 }
 
 export function useDayPicker(currentDate: Date) {
   const prevDateRef = useRef(currentDate);
-  const [move, setMove] = useState("0px 0");
+  const [move, setMove] = useState("0");
   const [transition, setTransition] = useState("none");
 
-  const dates = generateDates(currentDate);
+  const datesWithSelect = generateDatesWithSelect(currentDate);
 
   useMemo(() => {
-    setMove(
-      `${((currentDate - prevDateRef.current) / (1000 * 60 * 60 * 24)) * 60}px 0`,
-    );
+    setMove(`${translateValue(currentDate, prevDateRef.current)}px 0`);
     setTransition("none");
     setTimeout(() => {
-      setMove("0px 0");
-      setTransition("translate 0.5s ease-in-out");
+      setMove("0");
+      setTransition(TRANSITION_STYLE);
     }, 1);
   }, [currentDate]);
 
   return {
     move,
     transition,
-    dates,
+    datesWithSelect,
     prevDateRef,
   };
 }

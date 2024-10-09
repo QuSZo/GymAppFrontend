@@ -1,0 +1,16 @@
+@import "@/styles/variables.module";
+
+.buttonContainer {
+  border: 0;
+  padding: 5px 10px;
+  background-color: $color-blue;
+  border-radius: 10px;
+  color: $color-text;
+  font-weight: nth($font-tiny, 1);
+  font-size: nth($font-tiny, 2);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $color-blue-hover;
+  }
+}

@@ -3,18 +3,19 @@
 .menu {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
   position: sticky;
   top: 0;
   background-color: $color-secondary;
   list-style: none;
   gap: 5vw;
   height: $height-navigation;
+  padding: 0 5vw;
 
   .menuItem a {
     color: $color-text;
-    font-weight: nth($font-normal, 1);
-    font-size: nth($font-normal, 2);
+    font-weight: nth($font-small, 1);
+    font-size: nth($font-small, 2);
     text-decoration: none;
 
     &:hover {

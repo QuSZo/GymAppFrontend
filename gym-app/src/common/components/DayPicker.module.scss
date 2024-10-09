@@ -2,18 +2,31 @@
 
 .main {
   display: flex;
-  justify-content: center;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
   background-color: $color-secondary;
+  gap: 20px;
+
+  .mainOptions {
+    display: flex;
+    justify-content: space-between;
+    width: calc($width-day-element * 7);
+
+    .buttonHidden {
+      visibility: hidden;
+    }
+  }
 
   .mainWrapper {
     display: flex;
     justify-content: center;
     width: calc($width-day-element * 7);
     overflow: hidden;
-  }
+    padding-bottom: 5px;
 
-  .mainWrapperFloating {
-    display: flex;
-    transition: translate 0.5s ease-in-out;
+    .mainWrapperFloating {
+      display: flex;
+    }
   }
 }

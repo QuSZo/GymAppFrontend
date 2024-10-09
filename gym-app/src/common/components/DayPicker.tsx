@@ -3,8 +3,8 @@
 import styles from "./DayPicker.module.scss";
 import DayElement from "@/common/components/DayElement";
 import { cn } from "@/utils/className";
-import { useMemo, useRef, useState } from "react";
 import { useDayPicker } from "@/common/components/useDayPicker";
+import Button from "@/common/components/Button";
 
 type DayPickerProps = {
   date: Date;
@@ -13,23 +13,31 @@ type DayPickerProps = {
 };
 
 export default function DayPicker(props: DayPickerProps) {
-  const { move, transition, dates, prevDateRef } = useDayPicker(props.date);
+  const { move, transition, datesWithSelect, prevDateRef } = useDayPicker(
+    props.date,
+  );
 
   return (
     <div className={cn(styles.main, props.className)}>
+      <div className={styles.mainOptions}>
+        <Button className={false ? styles.buttonHidden : ""}>Reset</Button>
+        <p>{props.date.toLocaleDateString("pl-PL", { month: "long" })}</p>
+        <Button>Kalendarz</Button>
+      </div>
       <div className={styles.mainWrapper}>
         <div
           className={styles.mainWrapperFloating}
           style={{ translate: move, transition: transition }}
         >
-          {dates.map((date, index) => (
+          {datesWithSelect.map((dateWithSelect, index) => (
             <DayElement
+              key={index}
               onClick={(date) => {
                 prevDateRef.current = props.date;
                 props.onClick(date);
               }}
-              key={index}
-              date={date}
+              date={dateWithSelect.date}
+              selected={dateWithSelect.selected}
             />
           ))}
         </div>
