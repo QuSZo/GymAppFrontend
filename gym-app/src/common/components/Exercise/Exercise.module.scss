@@ -1,0 +1,25 @@
+@import "@/styles/variables.module";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 2px solid $color-border;
+  padding: 10px 0;
+  gap: 20px;
+
+  .mainExerciseName {
+    font-weight: nth($font-normal, 1);
+    font-size: nth($font-normal, 2);
+  }
+
+  .mainExerciseSetsContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .svg {
+      margin-left: 10px;
+    }
+  }
+}

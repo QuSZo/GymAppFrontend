@@ -1,4 +1,4 @@
-import { Menu } from "@/common/components/Menu";
+import { Menu } from "@/common/components/Menu/Menu";
 import { Roboto } from "next/font/google";
 import "@/styles/reset.scss";
 import "@/styles/global.scss";

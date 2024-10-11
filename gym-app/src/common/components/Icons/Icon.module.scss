@@ -1,0 +1,20 @@
+@import "@/styles/variables.module";
+
+.svg {
+  display: inline-block;
+  height: 40px;
+  aspect-ratio: 1;
+
+  &:hover {
+    cursor: pointer;
+
+    .icon {
+      color: $color-text-accent;
+    }
+  }
+
+  .icon {
+    width: 10px;
+    color: $color-text;
+  }
+}

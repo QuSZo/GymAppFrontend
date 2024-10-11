@@ -1,10 +1,10 @@
 "use client";
 
 import styles from "./DayPicker.module.scss";
-import DayElement from "@/common/components/DayElement";
+import DayElement from "@/common/components/DayPicker/DayElement/DayElement";
 import { cn } from "@/utils/className";
-import { useDayPicker } from "@/common/components/useDayPicker";
-import Button from "@/common/components/Button";
+import { useDayPicker } from "@/common/components/DayPicker/useDayPicker";
+import Button from "@/common/components/Button/Button";
 
 type DayPickerProps = {
   date: Date;
