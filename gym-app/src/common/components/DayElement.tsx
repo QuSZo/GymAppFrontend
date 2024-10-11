@@ -6,7 +6,8 @@ import { cn } from "@/utils/className";
 type DayElementProps = {
   onClick: (date: Date) => void;
   date: Date;
-  selected: boolean;
+  selected?: boolean;
+  labeled: boolean;
 };
 
 export default function DayElement(props: DayElementProps) {
@@ -31,6 +32,12 @@ export default function DayElement(props: DayElementProps) {
           <p>{props.date.getDate()}</p>
         </div>
       </button>
+      <div
+        className={cn(
+          styles.mainElementLabeled,
+          !props.labeled ? styles.mainElementLabeledHidden : undefined,
+        )}
+      ></div>
     </div>
   );
 }

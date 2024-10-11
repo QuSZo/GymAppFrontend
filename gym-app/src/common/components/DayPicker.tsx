@@ -9,35 +9,53 @@ import Button from "@/common/components/Button";
 type DayPickerProps = {
   date: Date;
   onClick: (date: Date) => void;
+  numberOfDays: number;
+  labeledDays?: Date[];
   className?: string;
 };
 
 export default function DayPicker(props: DayPickerProps) {
-  const { move, transition, datesWithSelect, prevDateRef } = useDayPicker(
+  const { move, transition, dayElementProps, prevDateRef } = useDayPicker(
     props.date,
+    props.numberOfDays,
+    props.labeledDays,
   );
+
+  function daySelected(dateSelected: Date): void {
+    prevDateRef.current = props.date;
+    props.onClick(dateSelected);
+  }
 
   return (
     <div className={cn(styles.main, props.className)}>
       <div className={styles.mainOptions}>
-        <Button className={false ? styles.buttonHidden : ""}>Reset</Button>
-        <p>{props.date.toLocaleDateString("pl-PL", { month: "long" })}</p>
-        <Button>Kalendarz</Button>
+        <div className={styles.mainOptionsLeft}>
+          <Button
+            onClick={() => daySelected(new Date())}
+            className={false ? styles.buttonHidden : ""}
+          >
+            Reset
+          </Button>
+        </div>
+        <div className={styles.mainOptionsCenter}>
+          <p>{props.date.toLocaleDateString("pl-PL", { month: "long" })}</p>
+        </div>
+        <div className={styles.mainOptionsRight}>
+          <Button>Kalendarz</Button>
+        </div>
       </div>
       <div className={styles.mainWrapper}>
         <div
           className={styles.mainWrapperFloating}
           style={{ translate: move, transition: transition }}
         >
-          {datesWithSelect.map((dateWithSelect, index) => (
+          {dayElementProps.map((dayElementProps, index) => (
             <DayElement
               key={index}
-              onClick={(date) => {
-                prevDateRef.current = props.date;
-                props.onClick(date);
-              }}
-              date={dateWithSelect.date}
-              selected={dateWithSelect.selected}
+              onClick={daySelected}
+              date={dayElementProps.date}
+              selected={dayElementProps.selected}
+              labeled={dayElementProps.labeled}
             />
           ))}
         </div>
