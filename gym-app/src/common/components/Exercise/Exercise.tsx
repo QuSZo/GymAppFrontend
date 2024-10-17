@@ -1,7 +1,7 @@
 import styles from "./Exercise.module.scss";
 import ExerciseSet from "@/common/components/Exercise/ExerciseSet/ExerciseSet";
 import type { exercise } from "@/api/exercise";
-import AddIcon from "@/common/components/Icons/AddIcon/AddIcon";
+import PlusIconCircle from "@/common/components/Icons/AddIcon/PlusIconCircle";
 import { log } from "node:util";
 
 type ExerciseProps = {
@@ -18,7 +18,7 @@ export default function Exercise(props: ExerciseProps) {
         {props.exercise.exerciseSets.map((exerciseSet, index) => (
           <ExerciseSet key={index} exerciseSet={exerciseSet} />
         ))}
-        <AddIcon
+        <PlusIconCircle
           onClick={() => {
             console.log("Działa");
           }}

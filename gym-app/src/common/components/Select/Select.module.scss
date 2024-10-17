@@ -1,0 +1,12 @@
+@import "@/styles/variables.module";
+
+.main {
+  .select {
+    background: rgb($color-primary);
+    color: rgb($color-text);
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    border-right: 20px solid transparent;
+  }
+}

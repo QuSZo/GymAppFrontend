@@ -7,7 +7,7 @@ type DayElementProps = {
   labeled: boolean;
 };
 
-const TRANSITION_STYLE = "translate 0.5s ease-in-out";
+const TRANSITION_STYLE = "translate .5s ease-in-out";
 
 function generateDayElementProps(
   currentDate: Date,
@@ -31,9 +31,10 @@ function generateDayElementProps(
     dates.push({
       date: new Date(firstDay),
       selected: firstDay.getTime() == currentDate.getTime(),
-      labeled: labeledDays
-        ? labeledDays.some((date) => isSameDay(date, firstDay))
-        : false,
+      labeled:
+        labeledDays && labeledDays.length > 0
+          ? labeledDays.some((date) => isSameDay(date, firstDay))
+          : false,
     });
     firstDay.setDate(firstDay.getDate() + 1);
   }

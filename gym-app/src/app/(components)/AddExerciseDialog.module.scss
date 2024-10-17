@@ -1,0 +1,37 @@
+@import "@/styles/variables.module";
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 60%;
+  overflow: scroll;
+
+  .dialogTitle {
+    @include font-medium-bold;
+  }
+
+  .dialogForm {
+    display: flex;
+    gap: 20px;
+  }
+
+  .dialogExerciseWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .dialogExercise {
+      display: flex;
+      justify-content: left;
+      background-color: transparent;
+      color: rgb($color-text);
+      border-top: 2px solid rgb($color-border);
+      padding: 10px 0;
+      @include font-tiny;
+
+      &:hover {
+        background-color: rgb($color-primary);
+      }
+    }
+  }
+}

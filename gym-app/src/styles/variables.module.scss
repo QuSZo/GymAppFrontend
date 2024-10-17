@@ -1,19 +1,27 @@
-$color-primary: #202b3e;
-$color-secondary: #0c1322;
-$color-border: #2d425f;
-$color-text: #e9edf5;
-$color-text-accent: #a3b9d6;
-$color-blue: #0a54eb;
-$color-blue-hover: #116bff;
+$color-primary: 32 43 62;
+$color-secondary: 12 19 34;
+$color-border: 45 66 95;
+$color-text: 233 237 245;
+$color-text-accent: 163 185 214;
+$color-blue: 10 84 235;
+$color-blue-hover: 17 107 255;
 
-$font-ultra: 100 54px;
-$font-header: 500 32px;
-$font-normal: 300 24px;
-$font-medium: 300 18px;
-$font-small: 300 16px;
-$font-smaller: 500 14px;
-$font-tiny: 500 12px;
-
-$height-navigation: 10vh;
 $width-day-element: 40px;
 $gap-day-picker: 20px;
+
+$padding-main-container: 50px 5vw;
+
+@mixin font-medium-bold {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+@mixin font-small {
+  font-weight: 300;
+  font-size: 16px;
+}
+
+@mixin font-tiny {
+  font-weight: 500;
+  font-size: 12px;
+}

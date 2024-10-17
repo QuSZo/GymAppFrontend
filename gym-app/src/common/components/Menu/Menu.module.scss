@@ -1,25 +1,25 @@
 @import "@/styles/variables.module";
 
 .menu {
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: right;
   position: sticky;
   top: 0;
-  background-color: $color-secondary;
+  background-color: rgb($color-secondary);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   list-style: none;
   gap: 5vw;
-  height: $height-navigation;
-  padding: 0 5vw;
+  padding: 30px 5vw;
 
   .menuItem a {
-    color: $color-text;
-    font-weight: nth($font-small, 1);
-    font-size: nth($font-small, 2);
+    color: rgb($color-text);
+    @include font-small;
     text-decoration: none;
 
     &:hover {
-      color: $color-text-accent;
+      color: rgb($color-text-accent);
     }
   }
 }

@@ -22,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
+        <div id="myportal" />
         <Menu />
         <main className="main-container">{children}</main>
       </body>

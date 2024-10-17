@@ -1,0 +1,10 @@
+@import "@/styles/variables.module";
+
+.input {
+  color: rgb($color-text);
+  background-color: rgb($color-primary);
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 10px;
+  width: 100%;
+}

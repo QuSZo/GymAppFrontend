@@ -1,5 +1,5 @@
 import { cn } from "@/utils/className";
-import AddIconSvg from "./AddIconSvg.svg";
+import PlusIconCircleEmptySvg from "./PlusIconCircleEmptySvg.svg";
 import styles from "../Icon.module.scss";
 
 type IconProps = {
@@ -8,11 +8,11 @@ type IconProps = {
   classNameIcon?: string;
 };
 
-export default function AddIcon(props: IconProps) {
+export default function PlusIconCircle(props: IconProps) {
   return (
     <svg onClick={props.onClick} className={cn(styles.svg, props.classNameSvg)}>
       <use
-        href={`${AddIconSvg}#AddIconSvg`}
+        href={`${PlusIconCircleEmptySvg}#AddIconSvg`}
         className={cn(styles.icon, props.classNameIcon)}
       />
     </svg>

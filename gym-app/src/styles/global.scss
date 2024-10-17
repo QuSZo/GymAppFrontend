@@ -10,12 +10,34 @@ html,
 body {
   display: flex;
   flex-direction: column;
-  background-color: $color-secondary;
-  color: $color-text;
+  background-color: rgb($color-secondary);
+  color: rgb($color-text);
   min-height: 100vh;
+  scrollbar-gutter: stable both-edges;
 }
 
 .main-container {
-  padding: 20px 5vw;
+  padding: $padding-main-container;
   flex-grow: 1;
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgb($color-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb($color-blue);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
 }

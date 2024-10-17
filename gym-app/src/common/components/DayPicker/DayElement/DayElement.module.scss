@@ -8,8 +8,7 @@
   width: $width-day-element;
 
   .mainDate {
-    font-weight: nth($font-smaller, 1);
-    font-size: nth($font-smaller, 2);
+    @include font-small;
   }
 
   .mainShield {
@@ -28,11 +27,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $color-primary;
+    background-color: rgb($color-primary);
     width: 100%;
     aspect-ratio: 1;
-    font-weight: nth($font-tiny, 1);
-    font-size: nth($font-tiny, 2);
+    @include font-tiny;
     clip-path: polygon(
       30% 0%,
       70% 0%,
@@ -53,7 +51,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: $color-border;
+      background-color: rgb($color-border);
       height: 30px;
       aspect-ratio: 1;
       clip-path: polygon(
@@ -74,7 +72,7 @@
   }
   .mainElementLabeled {
     width: 5px;
-    background-color: $color-text-accent;
+    background-color: rgb($color-text-accent);
     aspect-ratio: 1;
     border-radius: 50%;
 
