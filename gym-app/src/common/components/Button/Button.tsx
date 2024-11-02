@@ -1,13 +1,19 @@
 import styles from "./Button.module.scss";
 import { cn } from "@/utils/className";
+import { ButtonHTMLAttributes } from "react";
 
-export default function Button(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>,
-) {
+export type ButtonProps = {
+  styling?: "normal" | "delete" | "cancel";
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+export default function Button({ styling = "normal", ...props }: ButtonProps) {
   return (
     <button
-      className={cn(styles.buttonContainer, props.className)}
+      id={props.id}
+      type={props.type}
+      className={cn(styles.buttonContainer, styles[styling], props.className)}
       onClick={props.onClick}
+      popoverTarget={props.popoverTarget}
     >
       {props.children}
     </button>

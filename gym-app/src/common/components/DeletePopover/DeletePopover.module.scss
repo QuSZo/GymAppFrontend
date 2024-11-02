@@ -1,0 +1,27 @@
+@import "@/styles/variables.module";
+
+.overflow {
+  background-color: transparent;
+
+  .modal {
+    border: 1px solid rgb($color-border);
+    width: 200px;
+    padding: 15px;
+
+    .popoverContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      @include font-tiny;
+
+      .popoverContainerButtonWrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .popoverContainerButton {
+          padding: 5px 10px;
+        }
+      }
+    }
+  }
+}

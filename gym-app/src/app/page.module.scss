@@ -6,3 +6,9 @@
   align-items: center;
   gap: 20px;
 }
+
+@media only screen and (max-width: 600px) {
+  .main {
+    gap: 10px;
+  }
+}

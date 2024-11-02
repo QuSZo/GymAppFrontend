@@ -2,14 +2,38 @@
 
 .buttonContainer {
   border: 0;
-  padding: 5px 10px;
+  padding: 10px 20px;
   background-color: rgb($color-blue);
   border-radius: 10px;
   color: rgb($color-text);
   @include font-tiny;
 
+  &.normal {
+    background-color: rgb($color-blue);
+
+    &:hover {
+      background-color: rgb($color-blue-hover);
+    }
+  }
+
+  &.cancel {
+    background-color: transparent;
+    border: 2px solid rgb($color-primary);
+
+    &:hover {
+      background-color: rgb($color-border);
+    }
+  }
+
+  &.delete {
+    background-color: rgb($color-red);
+
+    &:hover {
+      background-color: rgb($color-red-hover);
+    }
+  }
+
   &:hover {
     cursor: pointer;
-    background-color: rgb($color-blue-hover);
   }
 }

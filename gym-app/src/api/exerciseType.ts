@@ -1,10 +1,12 @@
-import { API_URL } from "@/api/conf";
+import { UUID } from "node:crypto";
+import { customQuery } from "@/api/customFetch";
 
 export type exerciseTypeDetails = {
+  id: UUID;
   name: string;
-  exerciseCategoryId: string;
+  exerciseCategoryId: UUID;
 };
 
 export async function getExerciseTypes(): Promise<exerciseTypeDetails[]> {
-  return await fetch(API_URL + "exerciseTypes").then((res) => res.json());
+  return await customQuery("exercise-types");
 }

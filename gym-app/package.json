@@ -10,8 +10,10 @@
     "lint:fix": "next lint --fix & npx prettier --write \"src/**/*.{js,ts,jsx,tsx,css,scss}\""
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "next": "14.2.14",
     "react": "^18",
+    "react-day-picker": "^9.2.1",
     "react-dom": "^18",
     "sass": "^1.79.4"
   },

@@ -12,18 +12,13 @@ type SelectProps = {
 
 export default function Select(props: SelectProps) {
   return (
-    <div className={styles.main}>
-      <select
-        onChange={(e) => props.onChange(e.target.value)}
-        className={styles.select}
-      >
-        <option value={""}>Wszystkie</option>
-        {props.options.map((option: SelectOption, index: number) => (
-          <option value={option.value} key={index}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select onChange={(e) => props.onChange(e.target.value)} className={styles.select}>
+      <option value={""}>Wszystkie</option>
+      {props.options.map((option: SelectOption, index: number) => (
+        <option value={option.value} key={index}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   );
 }

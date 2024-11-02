@@ -1,13 +1,14 @@
 import styles from "./ExerciseSet.module.scss";
-import { exerciseSet } from "@/api/exerciseSet";
+import { exerciseSetDto } from "@/api/exerciseSet";
 
 type ExerciseSetProps = {
-  exerciseSet: exerciseSet;
+  exerciseSet: exerciseSetDto;
+  onClick: (exerciseSet: exerciseSetDto) => void;
 };
 
 export default function ExerciseSet(props: ExerciseSetProps) {
   return (
-    <div className={styles.main}>
+    <div className={styles.main} onClick={() => props.onClick(props.exerciseSet)}>
       {props.exerciseSet.quantity} kg x {props.exerciseSet.reps}
     </div>
   );

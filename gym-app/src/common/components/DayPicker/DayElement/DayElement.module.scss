@@ -31,16 +31,7 @@
     width: 100%;
     aspect-ratio: 1;
     @include font-tiny;
-    clip-path: polygon(
-      30% 0%,
-      70% 0%,
-      100% 30%,
-      100% 70%,
-      70% 100%,
-      30% 100%,
-      0% 70%,
-      0% 30%
-    );
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 
     &.mainShieldSelected {
       background-color: #0e357e;
@@ -54,16 +45,7 @@
       background-color: rgb($color-border);
       height: 30px;
       aspect-ratio: 1;
-      clip-path: polygon(
-        30% 0%,
-        70% 0%,
-        100% 30%,
-        100% 70%,
-        70% 100%,
-        30% 100%,
-        0% 70%,
-        0% 30%
-      );
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 
       &.mainShieldContentSelected {
         background-color: #0a5cc3;

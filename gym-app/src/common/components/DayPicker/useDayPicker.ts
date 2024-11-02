@@ -9,32 +9,17 @@ type DayElementProps = {
 
 const TRANSITION_STYLE = "translate .5s ease-in-out";
 
-function generateDayElementProps(
-  currentDate: Date,
-  numberOfDays: number,
-  labeledDays?: Date[],
-): DayElementProps[] {
+function generateDayElementProps(currentDate: Date, numberOfDays: number, labeledDays?: Date[]): DayElementProps[] {
   const currentDateTemp = new Date(currentDate);
-  const firstDay = new Date(
-    currentDateTemp.setDate(
-      currentDateTemp.getDate() - Math.floor(numberOfDays / 2) * 2,
-    ),
-  );
-  const lastDay = new Date(
-    currentDateTemp.setDate(
-      currentDateTemp.getDate() + Math.floor(numberOfDays / 2) * 2 * 2,
-    ),
-  );
+  const firstDay = new Date(currentDateTemp.setDate(currentDateTemp.getDate() - Math.floor(numberOfDays / 2) * 2));
+  const lastDay = new Date(currentDateTemp.setDate(currentDateTemp.getDate() + Math.floor(numberOfDays / 2) * 2 * 2));
 
   const dates: DayElementProps[] = [];
   while (firstDay <= lastDay) {
     dates.push({
       date: new Date(firstDay),
       selected: firstDay.getTime() == currentDate.getTime(),
-      labeled:
-        labeledDays && labeledDays.length > 0
-          ? labeledDays.some((date) => isSameDay(date, firstDay))
-          : false,
+      labeled: labeledDays && labeledDays.length > 0 ? labeledDays.some((date) => isSameDay(date, firstDay)) : false,
     });
     firstDay.setDate(firstDay.getDate() + 1);
   }
@@ -46,11 +31,7 @@ function getFirstDisplayingDateIndex(dates: Date[]): number {
   return Math.floor(dates.length / 2) / 2;
 }
 
-function translateValue(
-  currentDate: Date,
-  prevDate: Date,
-  dates: Date[],
-): number {
+function translateValue(currentDate: Date, prevDate: Date, dates: Date[]): number {
   const dayElementWidth = 60;
   const millisecondsInDay = 1000 * 60 * 60 * 24;
   if (prevDate < dates[getFirstDisplayingDateIndex(dates)]) {
@@ -59,25 +40,16 @@ function translateValue(
   if (prevDate > dates[dates.length - 1 - getFirstDisplayingDateIndex(dates)]) {
     prevDate = dates[dates.length - 1 - getFirstDisplayingDateIndex(dates)];
   }
-  const daysDifference =
-    (currentDate.getTime() - prevDate.getTime()) / millisecondsInDay;
+  const daysDifference = (currentDate.getTime() - prevDate.getTime()) / millisecondsInDay;
   return daysDifference * dayElementWidth;
 }
 
-export function useDayPicker(
-  currentDate: Date,
-  numberOfDays: number,
-  labeledDays?: Date[],
-) {
+export function useDayPicker(currentDate: Date, numberOfDays: number, labeledDays?: Date[]) {
   const prevDateRef = useRef(currentDate);
   const [move, setMove] = useState("0");
   const [transition, setTransition] = useState("none");
 
-  const dayElementProps = generateDayElementProps(
-    currentDate,
-    numberOfDays,
-    labeledDays,
-  );
+  const dayElementProps = generateDayElementProps(currentDate, numberOfDays, labeledDays);
 
   useMemo(() => {
     setMove(

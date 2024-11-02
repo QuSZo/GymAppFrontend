@@ -1,18 +1,36 @@
-import { exercise } from "@/api/exercise";
-import { API_URL } from "@/api/conf";
+import { exerciseDto } from "@/api/exercise";
+import { UUID } from "node:crypto";
+import { customCommand, customQuery } from "@/api/customFetch";
 
-export type workout = {
+export type workoutsDto = {
+  id: UUID;
   date: Date;
-  exercises: exercise[];
 };
 
-export async function getWorkouts(): Promise<workout[]> {
-  return await fetch(API_URL + "workouts").then((res) => res.json());
+export type workoutDetailsDto = {
+  id: UUID;
+  date: Date;
+  exercises: exerciseDto[];
+};
+
+export type createWorkoutCommand = {
+  date: Date;
+  exerciseTypeId: UUID;
+};
+
+export async function getWorkouts(): Promise<workoutsDto[]> {
+  return await customQuery("workouts");
 }
 
-export async function getWorkout(date: string): Promise<workout> {
-  const response = await fetch(API_URL + "workouts?date=" + `${date}`).then(
-    (res) => res.json(),
-  );
-  return response[0];
+export async function getWorkout(id: UUID): Promise<workoutDetailsDto> {
+  return await customQuery("workouts/" + `${id}`);
+}
+
+export async function getWorkoutByDate(date: Date): Promise<workoutDetailsDto> {
+  const dateString = date.toISOString();
+  return await customQuery<workoutDetailsDto>("workouts/" + `${dateString}`);
+}
+
+export async function createWorkout(command: createWorkoutCommand): Promise<UUID> {
+  return await customCommand<createWorkoutCommand>("workouts", "POST", command);
 }

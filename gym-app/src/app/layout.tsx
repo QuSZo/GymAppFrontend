@@ -14,15 +14,12 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
         <div id="myportal" />
+        <div id="popover" />
         <Menu />
         <main className="main-container">{children}</main>
       </body>

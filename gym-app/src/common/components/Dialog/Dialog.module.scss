@@ -9,8 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(1px);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 2;
 
   .modal {
@@ -19,7 +18,11 @@
     border-radius: 15px;
     padding: 20px;
     z-index: 3;
-    animation: enter 0.2s ease-out;
+    animation: enter 0.1s ease-out;
+
+    &.close {
+      animation: close 0.05s ease-out forwards;
+    }
   }
 }
 @keyframes enter {
@@ -29,5 +32,17 @@
 
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes close {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.8);
+    opacity: 0.8;
   }
 }

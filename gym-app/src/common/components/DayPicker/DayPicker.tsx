@@ -5,6 +5,7 @@ import DayElement from "@/common/components/DayPicker/DayElement/DayElement";
 import { cn } from "@/utils/className";
 import { useDayPicker } from "@/common/components/DayPicker/useDayPicker";
 import Button from "@/common/components/Button/Button";
+import Calendar from "@/common/components/ReactCalendar/Calendar/Calendar";
 
 type DayPickerProps = {
   date: Date;
@@ -15,11 +16,7 @@ type DayPickerProps = {
 };
 
 export default function DayPicker(props: DayPickerProps) {
-  const { move, transition, dayElementProps, prevDateRef } = useDayPicker(
-    props.date,
-    props.numberOfDays,
-    props.labeledDays,
-  );
+  const { move, transition, dayElementProps, prevDateRef } = useDayPicker(props.date, props.numberOfDays, props.labeledDays);
 
   function daySelected(dateSelected: Date): void {
     prevDateRef.current = props.date;
@@ -30,10 +27,7 @@ export default function DayPicker(props: DayPickerProps) {
     <div className={cn(styles.main, props.className)}>
       <div className={styles.mainOptions}>
         <div className={styles.mainOptionsLeft}>
-          <Button
-            onClick={() => daySelected(new Date())}
-            className={false ? styles.buttonHidden : ""}
-          >
+          <Button onClick={() => daySelected(new Date())} className={styles.button}>
             Reset
           </Button>
         </div>
@@ -41,14 +35,11 @@ export default function DayPicker(props: DayPickerProps) {
           <p>{props.date.toLocaleDateString("pl-PL", { month: "long" })}</p>
         </div>
         <div className={styles.mainOptionsRight}>
-          <Button>Kalendarz</Button>
+          <Calendar onDayClick={(date: Date) => daySelected(new Date(date))} selected={props.date}></Calendar>
         </div>
       </div>
       <div className={styles.mainWrapper}>
-        <div
-          className={styles.mainWrapperFloating}
-          style={{ translate: move, transition: transition }}
-        >
+        <div className={styles.mainWrapperFloating} style={{ translate: move, transition: transition }}>
           {dayElementProps.map((dayElementProps, index) => (
             <DayElement
               key={index}

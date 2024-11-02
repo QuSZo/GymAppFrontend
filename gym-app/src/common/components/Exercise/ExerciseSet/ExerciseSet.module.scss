@@ -5,4 +5,10 @@
   padding: 10px;
   border: 3px solid rgb($color-border);
   border-radius: 10px;
+
+  &:hover {
+    border: 3px solid rgb($color-blue-hover);
+    background-color: rgb($color-secondary-hover);
+    cursor: pointer;
+  }
 }

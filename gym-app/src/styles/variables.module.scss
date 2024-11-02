@@ -1,15 +1,19 @@
 $color-primary: 32 43 62;
 $color-secondary: 12 19 34;
+$color-secondary-hover: 27 42 75;
 $color-border: 45 66 95;
 $color-text: 233 237 245;
 $color-text-accent: 163 185 214;
 $color-blue: 10 84 235;
 $color-blue-hover: 17 107 255;
+$color-red: 255 56 56;
+$color-red-hover: 255 81 81;
 
 $width-day-element: 40px;
 $gap-day-picker: 20px;
 
-$padding-main-container: 50px 5vw;
+$padding-main-container: 40px 5vw;
+$padding-main-container-mobile: 20px 5vw;
 
 @mixin font-medium-bold {
   font-weight: 500;
@@ -23,5 +27,10 @@ $padding-main-container: 50px 5vw;
 
 @mixin font-tiny {
   font-weight: 500;
+  font-size: 12px;
+}
+
+@mixin font-tiny-light {
+  font-weight: 300;
   font-size: 12px;
 }
