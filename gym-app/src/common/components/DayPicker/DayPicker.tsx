@@ -32,10 +32,20 @@ export default function DayPicker(props: DayPickerProps) {
           </Button>
         </div>
         <div className={styles.mainOptionsCenter}>
-          <p>{props.date.toLocaleDateString("pl-PL", { month: "long" })}</p>
+          <p>
+            {props.date.toLocaleDateString("pl-PL", { month: "long" })}
+            {props.date.getFullYear() !== new Date().getFullYear() && ` ${props.date.getFullYear()}`}
+          </p>
         </div>
         <div className={styles.mainOptionsRight}>
-          <Calendar onDayClick={(date: Date) => daySelected(new Date(date))} selected={props.date}></Calendar>
+          <Calendar
+            mode={"single"}
+            onDayClick={(date: Date) => {
+              daySelected(date);
+            }}
+            selected={props.date}
+            defaultMonth={props.date}
+          ></Calendar>
         </div>
       </div>
       <div className={styles.mainWrapper}>

@@ -64,7 +64,7 @@ export default function MainPage() {
 
   async function onAddExercise(exerciseTypeId: UUID) {
     if (workout == undefined) {
-      await createWorkout({ exerciseTypeId: exerciseTypeId, date: selectedDate });
+      await createWorkout({ exerciseTypeId: exerciseTypeId, date: selectedDate.toLocaleDateString("sv-SE") });
     } else {
       await addExercise({ exerciseTypeId: exerciseTypeId, workoutId: workout.id });
     }

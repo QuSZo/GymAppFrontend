@@ -2,12 +2,13 @@ import { cn } from "@/utils/className";
 import PlusIconBoldSvg from "./svgs/add/PlusIconBoldSvg.svg";
 import PlusIconCircleEmptySvg from "./svgs/add/PlusIconCircleEmptySvg.svg";
 import DeleteIcon from "./svgs/delete/deleteIcon.svg";
+import CalendarIcon from "./svgs/calendar/calendarIcon.svg";
 import styles from "../Icon.module.scss";
 import { forwardRef } from "react";
 
 type IconProps = {
   id?: string;
-  name: "add" | "addCircle" | "delete";
+  name: "add" | "addCircle" | "delete" | "calendar";
   onClick?: () => void;
   classNameSvg?: string;
   classNameIcon?: string;
@@ -25,6 +26,9 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props: IconProps, ref
       break;
     case "delete":
       iconHref = `${DeleteIcon}#DeleteIcon`;
+      break;
+    case "calendar":
+      iconHref = `${CalendarIcon}#CalendarIcon`;
       break;
     default:
       iconHref = `${PlusIconBoldSvg}#AddIconSvg`;

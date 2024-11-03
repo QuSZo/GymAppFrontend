@@ -14,7 +14,7 @@ export type workoutDetailsDto = {
 };
 
 export type createWorkoutCommand = {
-  date: Date;
+  date: string;
   exerciseTypeId: UUID;
 };
 
@@ -27,7 +27,7 @@ export async function getWorkout(id: UUID): Promise<workoutDetailsDto> {
 }
 
 export async function getWorkoutByDate(date: Date): Promise<workoutDetailsDto> {
-  const dateString = date.toISOString();
+  const dateString = date.toLocaleDateString("sv-SE");
   return await customQuery<workoutDetailsDto>("workouts/" + `${dateString}`);
 }
 

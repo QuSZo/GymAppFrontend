@@ -1,11 +1,23 @@
 @import "@/styles/variables.module";
 
+.svg {
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    .icon {
+      color: #1e96ff;
+    }
+  }
+}
+
 .overflow {
   .modal {
-    display: block;
-    background: #10192c !important;
-    width: 308px !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
+    display: flex;
+    justify-content: center;
+    background: #10192c;
+    width: 400px;
+    height: 400px;
+    padding: 20px 0 0 0;
   }
 }
