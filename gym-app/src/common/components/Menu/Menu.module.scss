@@ -1,25 +1,37 @@
 @import "@/styles/variables.module";
 
-.menu {
-  z-index: 1;
+.container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: right;
+  z-index: 1;
   position: sticky;
   top: 0;
   background-color: rgb($color-secondary);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  list-style: none;
-  gap: 5vw;
   padding: 30px 5vw;
 
-  .menuItem a {
-    color: rgb($color-text);
-    @include font-small;
+  .appName a {
     text-decoration: none;
+    color: rgb($color-text);
+    @include font-normal-bold;
+  }
 
-    &:hover {
-      color: rgb($color-text-accent);
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    list-style: none;
+    gap: 5vw;
+
+    .menuItem a {
+      color: rgb($color-text);
+      @include font-small;
+      text-decoration: none;
+
+      &:hover {
+        color: rgb($color-text-accent);
+      }
     }
   }
 }

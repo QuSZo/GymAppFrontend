@@ -1,14 +1,14 @@
 import { createPortal } from "react-dom";
 import styles from "./Dialog.module.scss";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { cn } from "@/utils/className";
 
 export type DialogProps = {
-  show?: boolean;
+  show: boolean;
   onClose: () => void;
+  portalRoot: "dialog" | "popover";
   classNameOverflow?: string;
   classNameModal?: string;
-  portalRoot?: string;
   followedItem?: HTMLElement | null;
   side?: "left" | "bottom";
 };
@@ -18,28 +18,25 @@ type ClientPortalProps = {
 } & DialogProps;
 
 export default function Dialog(props: ClientPortalProps) {
-  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const portalRoot = props.portalRoot ? document.getElementById(props.portalRoot) : document.getElementById("dialog");
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
   const updateDialogPosition = useCallback(() => {
-    if (props.followedItem && ref.current) {
-      const rect = props.followedItem.getBoundingClientRect();
+    if (props.followedItem && dialogRef.current) {
+      const followedItemRectangle = props.followedItem.getBoundingClientRect();
       if (props.side === "bottom" || props.side == null) {
-        ref.current.style.left = `${rect.left - 11}px`;
-        ref.current.style.top = `${rect.top + (props.followedItem.offsetHeight ?? 0) + 1}px`;
+        dialogRef.current.style.left = `${followedItemRectangle.left - 11}px`;
+        dialogRef.current.style.top = `${followedItemRectangle.top + (props.followedItem.offsetHeight ?? 0) + 1}px`;
       } else if (props.side === "left") {
-        ref.current.style.left = `${rect.left - 11 - 200 + (props.followedItem.offsetWidth ?? 0)}px`;
-        ref.current.style.top = `${rect.top + (props.followedItem.offsetHeight ?? 0) + 1}px`;
+        dialogRef.current.style.left = `${followedItemRectangle.left - 11 - 200 + (props.followedItem.offsetWidth ?? 0)}px`;
+        dialogRef.current.style.top = `${followedItemRectangle.top + (props.followedItem.offsetHeight ?? 0) + 1}px`;
       }
     }
   }, [props.followedItem]);
 
   useEffect(() => {
-    const portalRoot = document.getElementById(props.portalRoot ?? "myportal");
-    setPortalRoot(portalRoot);
-
-    if (props.followedItem && ref.current) {
-      ref.current.style.position = "absolute";
+    if (props.followedItem && dialogRef.current) {
+      dialogRef.current.style.position = "absolute";
       updateDialogPosition();
     }
 
@@ -64,7 +61,7 @@ export default function Dialog(props: ClientPortalProps) {
   });
 
   const handleOverlayClick = () => {
-    ref.current?.classList.add(styles.close);
+    dialogRef.current?.classList.add(styles.close);
     setTimeout(props.onClose, 50);
   };
 
@@ -75,7 +72,7 @@ export default function Dialog(props: ClientPortalProps) {
   return props.show && portalRoot
     ? createPortal(
         <div className={cn(styles.overflow, props.classNameOverflow)} onMouseDown={handleOverlayClick}>
-          <div ref={ref} className={cn(styles.modal, props.classNameModal)} onMouseDown={handleModalContentClick}>
+          <div ref={dialogRef} className={cn(styles.modal, props.classNameModal)} onMouseDown={handleModalContentClick}>
             {props.children}
           </div>
         </div>,

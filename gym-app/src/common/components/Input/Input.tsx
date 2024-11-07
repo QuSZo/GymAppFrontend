@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps
         className={styles.input}
         onBlur={() => setFocused(true)}
         onFocus={() => isLastInput && setFocused(true)}
-        focused={focused.toString()}
+        data-focused={focused.toString()}
       />
       <span className={styles.error}>{errorMessage}</span>
     </div>

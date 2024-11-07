@@ -18,17 +18,17 @@ export type createWorkoutCommand = {
   exerciseTypeId: UUID;
 };
 
-export async function getWorkouts(): Promise<workoutsDto[]> {
-  return await customQuery("workouts");
+export async function getWorkouts(signal?: AbortSignal): Promise<workoutsDto[]> {
+  return await customQuery("workouts", signal);
 }
 
 export async function getWorkout(id: UUID): Promise<workoutDetailsDto> {
   return await customQuery("workouts/" + `${id}`);
 }
 
-export async function getWorkoutByDate(date: Date): Promise<workoutDetailsDto> {
+export async function getWorkoutByDate(date: Date, signal?: AbortSignal): Promise<workoutDetailsDto> {
   const dateString = date.toLocaleDateString("sv-SE");
-  return await customQuery<workoutDetailsDto>("workouts/" + `${dateString}`);
+  return await customQuery<workoutDetailsDto>("workouts/" + `${dateString}`, signal);
 }
 
 export async function createWorkout(command: createWorkoutCommand): Promise<UUID> {

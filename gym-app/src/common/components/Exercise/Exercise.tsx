@@ -10,7 +10,7 @@ import {
   updateExerciseSet,
 } from "@/api/exerciseSet";
 import AddExerciseSetDialog, { exerciseSet } from "@/common/components/Exercise/AddOrEditExerciseSetDialog/AddExerciseSetDialog";
-import { FormEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import EditExerciseSetDialog from "@/common/components/Exercise/AddOrEditExerciseSetDialog/EditExerciseSetDialog";
 import { Icon } from "@/common/components/Icons/Icon/Icon";
 import { UUID } from "node:crypto";
@@ -65,25 +65,13 @@ export default function Exercise(props: ExerciseProps) {
         </div>
         <div className={styles.mainExerciseSetsContainer}>
           {props.exercise.exerciseSets.map((exerciseSet: exerciseSetDto, index: number) => (
-            <ExerciseSet
-              key={index}
-              exerciseSet={exerciseSet}
-              onClick={(exerciseSet: exerciseSetDto) => {
-                setSelectedSet(exerciseSet);
-              }}
-            />
+            <ExerciseSet key={index} exerciseSet={exerciseSet} onClick={(exerciseSet: exerciseSetDto) => setSelectedSet(exerciseSet)} />
           ))}
-          <Icon
-            name={"addCircle"}
-            onClick={() => {
-              setShowAddDialog(true);
-            }}
-            classNameSvg={styles.svg}
-            classNameIcon={styles.icon}
-          />
+          <Icon name={"addCircle"} onClick={() => setShowAddDialog(true)} classNameSvg={styles.svg} classNameIcon={styles.icon} />
         </div>
       </div>
       <AddExerciseSetDialog
+        portalRoot={"dialog"}
         exerciseId={props.exercise.id}
         onAddExerciseSet={onAddExerciseSet}
         show={showAddDialog}
@@ -91,13 +79,12 @@ export default function Exercise(props: ExerciseProps) {
       />
       {selectedSet && (
         <EditExerciseSetDialog
+          portalRoot={"dialog"}
           exerciseSet={selectedSet}
           onEditExerciseSet={onEditExerciseSet}
           onDeleteExerciseSet={onDeleteExerciseSet}
           show={true}
-          onClose={() => {
-            setSelectedSet(undefined);
-          }}
+          onClose={() => setSelectedSet(undefined)}
         />
       )}
       <DeletePopover

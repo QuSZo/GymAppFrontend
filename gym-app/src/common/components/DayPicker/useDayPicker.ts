@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { isSameDay } from "@/utils/isSameDay";
+import { dateOnly } from "@/utils/dateOnly";
 
 type DayElementProps = {
   date: Date;
@@ -11,8 +12,8 @@ const TRANSITION_STYLE = "translate .5s ease-in-out";
 
 function generateDayElementProps(currentDate: Date, numberOfDays: number, labeledDays?: Date[]): DayElementProps[] {
   const currentDateTemp = new Date(currentDate);
-  const firstDay = new Date(currentDateTemp.setDate(currentDateTemp.getDate() - Math.floor(numberOfDays / 2) * 2));
-  const lastDay = new Date(currentDateTemp.setDate(currentDateTemp.getDate() + Math.floor(numberOfDays / 2) * 2 * 2));
+  const firstDay = dateOnly(new Date(currentDateTemp.setDate(currentDateTemp.getDate() - Math.floor(numberOfDays / 2) * 2)));
+  const lastDay = dateOnly(new Date(currentDateTemp.setDate(currentDateTemp.getDate() + Math.floor(numberOfDays / 2) * 2 * 2)));
 
   const dates: DayElementProps[] = [];
   while (firstDay <= lastDay) {

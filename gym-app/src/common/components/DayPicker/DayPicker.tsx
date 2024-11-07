@@ -6,6 +6,7 @@ import { cn } from "@/utils/className";
 import { useDayPicker } from "@/common/components/DayPicker/useDayPicker";
 import Button from "@/common/components/Button/Button";
 import Calendar from "@/common/components/ReactCalendar/Calendar/Calendar";
+import { dateOnly } from "@/utils/dateOnly";
 
 type DayPickerProps = {
   date: Date;
@@ -27,18 +28,19 @@ export default function DayPicker(props: DayPickerProps) {
     <div className={cn(styles.main, props.className)}>
       <div className={styles.mainOptions}>
         <div className={styles.mainOptionsLeft}>
-          <Button onClick={() => daySelected(new Date())} className={styles.button}>
+          <Button onClick={() => daySelected(dateOnly(new Date()))} className={styles.button}>
             Reset
           </Button>
         </div>
         <div className={styles.mainOptionsCenter}>
           <p>
             {props.date.toLocaleDateString("pl-PL", { month: "long" })}
-            {props.date.getFullYear() !== new Date().getFullYear() && ` ${props.date.getFullYear()}`}
+            {` ${props.date.getFullYear()}`}
           </p>
         </div>
         <div className={styles.mainOptionsRight}>
           <Calendar
+            labeledDays={props.labeledDays}
             mode={"single"}
             onDayClick={(date: Date) => {
               daySelected(date);

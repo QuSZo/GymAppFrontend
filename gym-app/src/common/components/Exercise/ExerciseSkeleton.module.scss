@@ -9,12 +9,11 @@
   gap: 20px;
 
   .mainExerciseName {
-    width: fit-content;
-    @include font-medium-bold;
     background-color: rgb($color-primary);
-    color: transparent;
     border-radius: 10px;
     animation: blink 1s normal 0s infinite;
+    width: 200px;
+    height: 20px;
   }
 
   .mainExerciseSetsContainer {

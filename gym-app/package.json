@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:build": "next build && next start",
     "lint": "next lint && npx prettier \"src/**/*.{js,ts,jsx,tsx,css,scss}\"",
     "lint:fix": "next lint --fix & npx prettier --write \"src/**/*.{js,ts,jsx,tsx,css,scss}\""
   },

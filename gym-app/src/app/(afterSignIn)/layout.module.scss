@@ -1,0 +1,13 @@
+@import "@/styles/variables.module";
+
+.main {
+  display: flex;
+  padding: $padding-main-container;
+  flex-grow: 1;
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    padding: $padding-main-container-mobile;
+  }
+}

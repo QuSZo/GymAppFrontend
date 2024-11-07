@@ -15,6 +15,21 @@ $gap-day-picker: 20px;
 $padding-main-container: 40px 5vw;
 $padding-main-container-mobile: 20px 5vw;
 
+@mixin font-huge-light {
+  font-weight: 700;
+  font-size: 144px;
+}
+
+@mixin font-big-light {
+  font-weight: 300;
+  font-size: 48px;
+}
+
+@mixin font-normal-bold {
+  font-weight: 500;
+  font-size: 24px;
+}
+
 @mixin font-medium-bold {
   font-weight: 500;
   font-size: 18px;
@@ -23,6 +38,11 @@ $padding-main-container-mobile: 20px 5vw;
 @mixin font-small {
   font-weight: 300;
   font-size: 16px;
+}
+
+@mixin font-smaller {
+  font-weight: 300;
+  font-size: 14px;
 }
 
 @mixin font-tiny {

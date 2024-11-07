@@ -1,0 +1,30 @@
+@import "@/styles/variables.module";
+
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  .info {
+    color: rgb($color-text-accent);
+    @include font-small;
+  }
+
+  .status {
+    @include font-huge-light;
+  }
+
+  .statusMessage {
+    @include font-medium-bold;
+  }
+
+  .button {
+    padding: 20px 30px;
+    text-decoration: none;
+    color: rgb($color-text);
+    @include font-tiny;
+  }
+}

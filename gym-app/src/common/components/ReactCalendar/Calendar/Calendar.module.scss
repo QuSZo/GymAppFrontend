@@ -21,3 +21,52 @@
     padding: 20px 0 0 0;
   }
 }
+
+.buttonNextPrev {
+  fill: rgb($color-text);
+}
+
+.selected {
+  color: rgb($color-text);
+  button {
+    background-color: rgb($color-blue);
+    border-radius: 100%;
+  }
+
+  &.labeledDays {
+    &::before {
+      background-color: rgb($color-text-accent);
+    }
+  }
+
+  &.today {
+    color: rgb($color-text);
+    button {
+      background-color: rgb($color-blue);
+    }
+  }
+}
+
+.today {
+  color: rgb($color-text-accent);
+
+  button {
+    border-radius: 100%;
+    background-color: rgb($color-primary);
+  }
+}
+
+.labeledDays {
+  position: relative;
+  &::before {
+    position: absolute;
+    left: 50%;
+    content: "";
+    background-color: rgb($color-blue-hover);
+    width: 5px;
+    aspect-ratio: 1;
+    bottom: 5px;
+    border-radius: 100%;
+    translate: -50% 0;
+  }
+}

@@ -1,13 +1,10 @@
 @import "@/styles/variables.module";
 
 .main {
-  @include font-small;
+  height: 42px;
   width: fit-content;
-  color: transparent;
   border-radius: 10px;
   animation: blink 1s normal 0s infinite;
-  padding: 10px;
-  border: 3px solid transparent;
 }
 
 @keyframes blink {

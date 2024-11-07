@@ -2,20 +2,18 @@ import styles from "@/common/components/Exercise/ExerciseSkeleton.module.scss";
 import ExerciseSetSkeleton from "@/common/components/Exercise/ExerciseSet/ExerciseSetSkeleton";
 
 export default function ExerciseSkeleton() {
-  const exerciseSetRandomArrayLen = Math.floor(Math.random() * (5 - 2) + 2);
-  const exerciseSetRandom = new Array(exerciseSetRandomArrayLen).fill(null);
-  const exerciseNameRandomArrayLen = Math.floor(Math.random() * (40 - 20) + 20);
-  const exerciseNameRandomArray = new Array(exerciseNameRandomArrayLen).fill("x");
-  return (
-    <div className={styles.main}>
-      <div className={styles.mainExerciseName}>
-        <p>{exerciseNameRandomArray.map((value, index) => value)}</p>
-      </div>
+  const exerciseElements = new Array(4).fill(null);
+  const exerciseNameWidth = [200, 150, 250, 175];
+  const exerciseSetElements = [new Array(3).fill(null), new Array(4).fill(null), new Array(4).fill(null), new Array(3).fill(null)];
+
+  return exerciseElements.map((value, index) => (
+    <div className={styles.main} key={index}>
+      <div className={styles.mainExerciseName} style={{ width: exerciseNameWidth[index] }}></div>
       <div className={styles.mainExerciseSetsContainer}>
-        {exerciseSetRandom.map((exerciseSet, index) => (
-          <ExerciseSetSkeleton key={index} />
+        {exerciseSetElements[index].map((exerciseSet, indexSet) => (
+          <ExerciseSetSkeleton key={indexSet} exerciseIndex={index} exerciseSetIndex={indexSet} />
         ))}
       </div>
     </div>
-  );
+  ));
 }

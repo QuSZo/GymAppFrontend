@@ -2,12 +2,13 @@ import { API_URL } from "@/api/conf";
 
 type commandMethods = "POST" | "PUT" | "PATCH" | "DELETE";
 
-export async function customQuery<T>(url: string): Promise<T> {
-  const response = await fetch(API_URL + url);
+export async function customQuery<T>(url: string, signal?: AbortSignal): Promise<T> {
+  const response = await fetch(API_URL + url, { signal: signal });
   if (!response.ok) throw new Error(`${response.statusText}`);
   return response.json();
 }
 
+// eslint-disable-next-line
 export async function customCommand<TCommand>(url: string, method: commandMethods, body?: TCommand): Promise<any> {
   const response = await fetch(API_URL + url, {
     method: method,
@@ -16,8 +17,8 @@ export async function customCommand<TCommand>(url: string, method: commandMethod
   });
   if (!response.ok) throw new Error(`${response.statusText}`);
 
-  const contentType = response.headers.get("content-type");
-  if (contentType && contentType.includes("application/json")) {
+  const contentType = response.headers.get("Content-Type");
+  if (contentType?.includes("application/json")) {
     return response.json();
   }
 

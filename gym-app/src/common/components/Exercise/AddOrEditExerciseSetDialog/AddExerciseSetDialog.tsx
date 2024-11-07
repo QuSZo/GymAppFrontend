@@ -38,7 +38,7 @@ export default function AddExerciseSetDialog(props: AddExerciseSetDialogProps) {
   }
 
   return (
-    <Dialog classNameOverflow={styles.overflow} classNameModal={styles.dialog} show={props.show} onClose={closeDialog}>
+    <Dialog portalRoot={"dialog"} classNameOverflow={styles.overflow} classNameModal={styles.dialog} show={props.show} onClose={closeDialog}>
       <p className={styles.dialogTitle}>Dodaj serię</p>
       <form onSubmit={onAddExerciseSet} className={styles.form}>
         <div className={styles.inputContainer}>

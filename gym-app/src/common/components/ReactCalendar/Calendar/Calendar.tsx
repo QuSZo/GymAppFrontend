@@ -7,11 +7,14 @@ import styles from "./Calendar.module.scss";
 import { useState } from "react";
 import { pl } from "date-fns/locale/pl";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = {
+  labeledDays?: Date[];
+} & React.ComponentProps<typeof DayPicker>;
 
-function Calendar({ showOutsideDays = true, onDayClick, ...props }: CalendarProps) {
+function Calendar({ labeledDays, showOutsideDays = true, onDayClick, ...props }: CalendarProps) {
   const [showCalendar, setShowCalendar] = useState(false);
 
+  // eslint-disable-next-line
   function handleOnDayClick(date: Date, modifiers: any, event: React.MouseEvent) {
     setShowCalendar(false);
     if (onDayClick) {
@@ -22,28 +25,32 @@ function Calendar({ showOutsideDays = true, onDayClick, ...props }: CalendarProp
   return (
     <>
       <Icon classNameIcon={styles.icon} classNameSvg={styles.svg} name={"calendar"} onClick={() => setShowCalendar(true)} />
-      <Dialog show={showCalendar} onClose={() => setShowCalendar(false)} classNameModal={styles.modal} classNameOverflow={styles.overflow}>
+      <Dialog
+        portalRoot={"dialog"}
+        show={showCalendar}
+        onClose={() => setShowCalendar(false)}
+        classNameModal={styles.modal}
+        classNameOverflow={styles.overflow}
+      >
         <DayPicker
+          modifiers={{ labeledDays: labeledDays }}
           locale={pl}
           showOutsideDays={showOutsideDays}
           weekStartsOn={1}
-          styles={{
-            root: {},
-            day: {},
-          }}
+          styles={{}}
           modifiersStyles={{
-            selected: {
-              color: "rgb(163, 185, 214)",
-              backgroundColor: "rgb(27, 42, 75)",
-            },
-            today: {
-              color: "rgb(163, 185, 214)",
-              borderRadius: "0.275rem",
-              backgroundColor: "rgb(12, 19, 34)",
-            },
             outside: {
               color: "rgb(53,58,64)",
             },
+          }}
+          modifiersClassNames={{
+            chevron: styles.buttonNextPrev,
+            today: styles.today,
+            selected: styles.selected,
+            labeledDays: styles.labeledDays,
+          }}
+          classNames={{
+            chevron: styles.buttonNextPrev,
           }}
           onDayClick={handleOnDayClick}
           {...props}

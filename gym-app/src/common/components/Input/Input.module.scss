@@ -18,11 +18,11 @@
     border-radius: 10px;
     width: 100%;
 
-    &:invalid[focused="true"] {
+    &:invalid[data-focused="true"] {
       border: 1px solid #ff5151;
     }
 
-    &:invalid[focused="true"] ~ .error {
+    &:invalid[data-focused="true"] ~ .error {
       display: block;
     }
   }

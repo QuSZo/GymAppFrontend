@@ -17,14 +17,11 @@ body {
 }
 
 .main-container {
-  padding: $padding-main-container;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   flex-grow: 1;
-}
-
-@media only screen and (max-width: 600px) {
-  .main-container {
-    padding: $padding-main-container-mobile;
-  }
 }
 
 ::-webkit-scrollbar {

@@ -46,7 +46,7 @@ export default function AddExerciseDialog(props: AddExerciseDialogProps) {
   }, [props.exerciseTypes, searchExercise, exerciseTypeSelect]);
 
   return (
-    <Dialog show={props.show} onClose={closeDialog} classNameOverflow={styles.overflow} classNameModal={styles.dialog}>
+    <Dialog portalRoot={"dialog"} show={props.show} onClose={closeDialog} classNameOverflow={styles.overflow} classNameModal={styles.dialog}>
       <p className={styles.dialogTitle}>Dodaj ćwiczenie</p>
       <form className={styles.dialogForm}>
         <Select onChange={setExerciseTypeSelect} options={selectOptions} />
