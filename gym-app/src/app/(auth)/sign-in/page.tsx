@@ -5,16 +5,22 @@ import styles from "../auth.module.scss";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
 import { FormEvent, useState } from "react";
-import { signIn } from "@/api/auth";
 import Link from "next/link";
+import { useAuthContext } from "@/common/contexts/authContext";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuthContext();
 
-  function onSignIn(e: FormEvent<HTMLFormElement>) {
+  async function onSignIn(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    signIn(email, password);
+    try {
+      await login(email, password);
+    } catch {
+      setError("Nieprawidłowe dane logowania");
+    }
   }
 
   return (
@@ -26,6 +32,7 @@ export default function SignInPage() {
         <form onSubmit={onSignIn} className={styles.form}>
           <h1 className={styles.headerText}>Zaloguj się</h1>
           <div className={styles.inputContainer}>
+            <p className={styles.error}>{error}</p>
             <Input
               value={email}
               name={"email"}

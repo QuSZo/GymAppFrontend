@@ -15,7 +15,7 @@ export default function RegisterPage() {
 
   function onRegister(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    register(email, password, confirmPassword);
+    register({ email: email, password: password });
   }
 
   return (

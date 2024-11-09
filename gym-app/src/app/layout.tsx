@@ -1,7 +1,7 @@
-import { Menu } from "@/common/components/Menu/Menu";
 import { Roboto } from "next/font/google";
 import "@/styles/reset.scss";
 import "@/styles/global.scss";
+import { AppWrapper } from "@/common/contexts/authContext";
 
 export const metadata = {
   title: "Next.js",
@@ -20,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={roboto.className}>
         <div id="dialog" />
         <div id="popover" />
-        <main className="main-container">{children}</main>
+        <AppWrapper>
+          <main className="main-container">{children}</main>
+        </AppWrapper>
       </body>
     </html>
   );

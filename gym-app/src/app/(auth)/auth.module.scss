@@ -40,6 +40,11 @@
         flex-direction: column;
         gap: 20px;
 
+        .error {
+          @include font-tiny;
+          color: rgb($color-red);
+        }
+
         .input {
           input {
             padding: 15px 30px;
