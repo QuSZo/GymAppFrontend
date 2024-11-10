@@ -10,5 +10,5 @@ export default function middleware(request: NextRequest): NextResponse {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/", "/ranking", "/workout/:path*"],
+  matcher: ["/", "/ranking", "/workout", "/workout/:path*"],
 };

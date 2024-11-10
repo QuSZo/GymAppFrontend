@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function WorkoutPage() {
+export default function MainPage() {
   const router = useRouter();
   useEffect(() => {
     function redirect() {
@@ -12,5 +12,5 @@ export default function WorkoutPage() {
     }
 
     redirect();
-  }, [router]);
+  }, []);
 }

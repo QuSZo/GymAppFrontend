@@ -12,7 +12,11 @@ type AuthContextProps = {
   logout: () => void;
 };
 
-const AuthContext = createContext<AuthContextProps>(null);
+const AuthContext = createContext<AuthContextProps>({
+  accessToken: null,
+  login: async () => {},
+  logout: () => {},
+});
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [cookie, setCookie, removeCookie] = useCookies(["accessToken"]);
@@ -32,8 +36,8 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     const expiryClaim = jwtDecode(accessToken).exp;
     const expiryDate = new Date(expiryClaim ? expiryClaim * 1000 : now.setHours(now.getHours() + 12));
     setCookie("accessToken", accessToken, { path: "/", expires: expiryDate });
-    router.push("/workout");
-    console.log("xd");
+    const today = new Date().toLocaleDateString("sv-SE");
+    router.push(`/workout/${today}`);
   };
 
   const logout = () => {

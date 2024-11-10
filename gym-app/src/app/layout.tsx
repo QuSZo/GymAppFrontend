@@ -18,9 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <div id="dialog" />
-        <div id="popover" />
         <AppWrapper>
+          <div id="dialog" />
+          <div id="popover" />
           <main className="main-container">{children}</main>
         </AppWrapper>
       </body>

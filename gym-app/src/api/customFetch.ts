@@ -1,7 +1,11 @@
 import { API_URL } from "@/api/conf";
-import Cookies from "js-cookie";
 
 type commandMethods = "POST" | "PUT" | "PATCH" | "DELETE";
+
+type Headers = {
+  "Content-Type": string;
+  Authorization?: string;
+};
 
 function getCookie(key: string) {
   const b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
@@ -9,27 +13,26 @@ function getCookie(key: string) {
 }
 
 function getHeaders() {
-  let headers = {
+  const headers: Headers = {
     "Content-Type": "application/json",
   };
   const accessToken = getCookie("accessToken");
 
   if (!accessToken) return headers;
 
-  headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
-  };
-
+  headers.Authorization = `Bearer ${accessToken}`;
   return headers;
 }
 
-export async function customQuery<T>(url: string, signal?: AbortSignal): Promise<T> {
+// eslint-disable-next-line
+export async function customQuery<T>(url: string, signal?: AbortSignal): Promise<any> {
   const response = await fetch(API_URL + url, {
     signal: signal,
     headers: getHeaders(),
   });
-  if (!response.ok) throw new Error(`${response.statusText}`);
+  if (!response.ok) {
+    throw new Error(`${response.status}`);
+  }
   return response.json();
 }
 

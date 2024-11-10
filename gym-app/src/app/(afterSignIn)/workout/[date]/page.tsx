@@ -29,6 +29,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   const [exerciseTypes, setExerciseTypes] = useState<exerciseTypeDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const controllerRef = useRef<AbortController | null>(null);
 
@@ -47,7 +48,8 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
 
       setWorkouts(allWorkouts);
       setWorkout(selectedWorkout);
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && (error.message === "401" || error.message === "403")) setError(error.message);
     } finally {
       if (!signal.aborted) {
         setIsLoading(false);
@@ -56,9 +58,15 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   };
 
   useEffect(() => {
+    if (error) {
+      throw new Error(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
     history.pushState({}, "", `/workout/${selectedDate.toLocaleDateString("sv-SE")}`);
     loadWorkoutData();
-  }, [router, selectedDate]);
+  }, [selectedDate]);
 
   useEffect(() => {
     const exerciseCategories = async () => {
