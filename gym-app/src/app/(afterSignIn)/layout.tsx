@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./layout.module.scss";
 import { Menu } from "@/common/components/Menu/Menu";
 

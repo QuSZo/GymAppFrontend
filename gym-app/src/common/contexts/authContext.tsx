@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 import { customCommand } from "@/api/customFetch";
@@ -15,19 +15,12 @@ type AuthContextProps = {
 const AuthContext = createContext<AuthContextProps>({
   accessToken: null,
   login: async () => {},
-  logout: () => {},
+  logout: async () => {},
 });
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [cookie, setCookie, removeCookie] = useCookies(["accessToken"]);
   const router = useRouter();
-
-  useEffect(() => {
-    // const accessToken = localStorage.getItem("accessToken");
-    // if (accessToken) {
-    //   setAccessToken("accessToken", accessToken);
-    // }
-  }, []);
 
   const login = async (email: string, password: string) => {
     const response = await customCommand("users/sign-in", "POST", { email, password });
@@ -41,7 +34,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   };
 
   const logout = () => {
-    removeCookie("accessToken");
+    removeCookie("accessToken", { path: "/" });
     router.push("/sign-in");
   };
 

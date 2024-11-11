@@ -12,7 +12,7 @@ import { exerciseTypeDetails, getExerciseTypes } from "@/api/exerciseType";
 import { UUID } from "node:crypto";
 import Workout from "@/common/components/Workout/Workout";
 import { dateOnly } from "@/utils/dateOnly";
-import { useRouter } from "next/navigation";
+import { AuthRequiredError } from "@/common/lib/exceptions";
 
 type WorkoutForDatePageProps = {
   params: {
@@ -28,7 +28,6 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   const [exerciseCategories, setExerciseCategories] = useState<exerciseCategory[]>([]);
   const [exerciseTypes, setExerciseTypes] = useState<exerciseTypeDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
   const [error, setError] = useState("");
 
   const controllerRef = useRef<AbortController | null>(null);
@@ -44,7 +43,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
 
     setIsLoading(true);
     try {
-      const [allWorkouts, selectedWorkout] = await Promise.all([getWorkouts(signal), getWorkoutByDate(selectedDate).catch(() => undefined)]);
+      const [allWorkouts, selectedWorkout] = await Promise.all([getWorkouts(signal), getWorkoutByDate(selectedDate, signal).catch(() => undefined)]);
 
       setWorkouts(allWorkouts);
       setWorkout(selectedWorkout);
@@ -59,7 +58,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
 
   useEffect(() => {
     if (error) {
-      throw new Error(error);
+      throw new AuthRequiredError();
     }
   }, [error]);
 
