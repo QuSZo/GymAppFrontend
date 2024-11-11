@@ -1,24 +1,29 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 import { customCommand } from "@/api/customFetch";
 import { jwtDecode } from "jwt-decode";
 
 type AuthContextProps = {
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>;
   accessToken: string | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextProps>({
+  reload: false,
+  setReload: () => {},
   accessToken: null,
   login: async () => {},
   logout: async () => {},
 });
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
+  const [reload, setReload] = useState(false);
   const [cookie, setCookie, removeCookie] = useCookies(["accessToken"]);
   const router = useRouter();
 
@@ -38,7 +43,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     router.push("/sign-in");
   };
 
-  return <AuthContext.Provider value={{ accessToken: cookie["accessToken"], login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ reload, setReload, accessToken: cookie["accessToken"], login, logout }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuthContext() {

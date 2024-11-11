@@ -6,7 +6,7 @@ import Button from "@/common/components/Button/Button";
 import { useAuthContext } from "@/common/contexts/authContext";
 
 export function Menu() {
-  const { logout } = useAuthContext();
+  const { logout, setReload } = useAuthContext();
 
   function handleLogOut() {
     logout();
@@ -15,11 +15,15 @@ export function Menu() {
   return (
     <div className={styles.container}>
       <p className={styles.appName}>
-        <Link href="/">GYMAPP</Link>
+        <Link href="/" onClick={() => setReload(true)}>
+          GYMAPP
+        </Link>
       </p>
       <ul className={styles.menu}>
         <li className={styles.menuItem}>
-          <Link href="/">Trening</Link>
+          <Link href="/" onClick={() => setReload(true)}>
+            Trening
+          </Link>
         </li>
         <li className={styles.menuItem}>
           <Link href="/ranking">Ranking</Link>

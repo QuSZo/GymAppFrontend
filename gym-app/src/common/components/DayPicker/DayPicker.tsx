@@ -29,7 +29,7 @@ export default function DayPicker(props: DayPickerProps) {
       <div className={styles.mainOptions}>
         <div className={styles.mainOptionsLeft}>
           <Button onClick={() => daySelected(dateOnly(new Date()))} className={styles.button}>
-            Reset
+            Dzisiaj
           </Button>
         </div>
         <div className={styles.mainOptionsCenter}>

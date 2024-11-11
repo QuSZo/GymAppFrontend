@@ -2,7 +2,7 @@
 
 import styles from "./page.module.scss";
 import DayPicker from "@/common/components/DayPicker/DayPicker";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getWorkouts, workoutsDto, workoutDetailsDto, getWorkoutByDate, createWorkout } from "@/api/workout";
 import CircleIconButton from "@/common/components/CircleIconButton/CircleIconButton";
 import AddExerciseDialog from "@/app/(afterSignIn)/_components/AddExerciseDialog";
@@ -13,6 +13,7 @@ import { UUID } from "node:crypto";
 import Workout from "@/common/components/Workout/Workout";
 import { dateOnly } from "@/utils/dateOnly";
 import { AuthRequiredError } from "@/common/lib/exceptions";
+import { useAuthContext } from "@/common/contexts/authContext";
 
 type WorkoutForDatePageProps = {
   params: {
@@ -29,6 +30,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   const [exerciseTypes, setExerciseTypes] = useState<exerciseTypeDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const { reload, setReload } = useAuthContext();
 
   const controllerRef = useRef<AbortController | null>(null);
 
@@ -63,9 +65,13 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   }, [error]);
 
   useEffect(() => {
+    if (reload) {
+      setSelectedDate(dateOnly(new Date()));
+      setReload(false);
+    }
     history.pushState({}, "", `/workout/${selectedDate.toLocaleDateString("sv-SE")}`);
     loadWorkoutData();
-  }, [selectedDate]);
+  }, [selectedDate, reload]);
 
   useEffect(() => {
     const exerciseCategories = async () => {
