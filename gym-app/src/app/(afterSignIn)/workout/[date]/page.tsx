@@ -2,7 +2,7 @@
 
 import styles from "./page.module.scss";
 import DayPicker from "@/common/components/DayPicker/DayPicker";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getWorkouts, workoutsDto, workoutDetailsDto, getWorkoutByDate, createWorkout } from "@/api/workout";
 import CircleIconButton from "@/common/components/CircleIconButton/CircleIconButton";
 import AddExerciseDialog from "@/app/(afterSignIn)/_components/AddExerciseDialog";
@@ -66,12 +66,19 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
 
   useEffect(() => {
     if (reload) {
+      console.log("XD1");
       setSelectedDate(dateOnly(new Date()));
       setReload(false);
     }
-    history.pushState({}, "", `/workout/${selectedDate.toLocaleDateString("sv-SE")}`);
-    loadWorkoutData();
-  }, [selectedDate, reload]);
+  }, [reload]);
+
+  useEffect(() => {
+    if (!reload) {
+      console.log("XD2");
+      history.pushState({}, "", `/workout/${selectedDate.toLocaleDateString("sv-SE")}`);
+      loadWorkoutData();
+    }
+  }, [selectedDate]);
 
   useEffect(() => {
     const exerciseCategories = async () => {
@@ -101,8 +108,13 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   return (
     <>
       <div className={styles.main}>
-        <DayPicker onClick={setSelectedDate} date={selectedDate} numberOfDays={7} labeledDays={workoutsDates} className={styles.dayPicker} />
-        <Workout isLoading={isLoading} workout={workout} onRefresh={loadWorkoutData} />
+        {!reload && (
+          <>
+            <DayPicker onClick={setSelectedDate} date={selectedDate} numberOfDays={7} labeledDays={workoutsDates} className={styles.dayPicker} />
+
+            <Workout isLoading={isLoading} workout={workout} onRefresh={loadWorkoutData} />
+          </>
+        )}
         <CircleIconButton onClick={() => setShowPortal(true)}>Dodaj trening</CircleIconButton>
       </div>
       <AddExerciseDialog
