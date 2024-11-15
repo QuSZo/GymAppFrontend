@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { resetPassword } from "@/api/auth";
+import { resetPassword } from "@/api/controllers/auth";
 import styles from "@/app/(auth)/auth.module.scss";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
@@ -22,7 +22,7 @@ export default function Page({ searchParams }: WorkoutForDatePageProps) {
 
   async function onResetPassword(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await resetPassword({ token: searchParams.token, email: email, password: password });
+    await resetPassword({ token: searchParams.token, email: email, password: password }, router);
     router.push("/reset-password-confirmation");
   }
 

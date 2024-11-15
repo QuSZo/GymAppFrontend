@@ -3,8 +3,8 @@ import { Input } from "@/common/components";
 import { useMemo, useRef, useState } from "react";
 import styles from "./AddExerciseDialog.module.scss";
 import Select, { SelectOption } from "@/common/components/Select/Select";
-import { exerciseCategory } from "@/api/exerciseCategory";
-import { exerciseTypeDetails } from "@/api/exerciseType";
+import { exerciseCategory } from "@/api/controllers/exerciseCategory";
+import { exerciseTypeDetails } from "@/api/controllers/exerciseType";
 import { UUID } from "node:crypto";
 
 type AddExerciseDialogProps = {

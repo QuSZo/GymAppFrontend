@@ -3,7 +3,7 @@ import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
 import { FormEvent, useState } from "react";
 import styles from "./AddOrEditExerciseSetDialog.module.scss";
-import { exerciseSetDto, updateExerciseSetCommand } from "@/api/exerciseSet";
+import { exerciseSetDto, updateExerciseSetCommand } from "@/api/controllers/exerciseSet";
 import { UUID } from "node:crypto";
 import DeletePopover from "@/common/components/DeletePopover/DeletePopover";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { forgotPassword } from "@/api/auth";
+import { forgotPassword } from "@/api/controllers/auth";
 import styles from "@/app/(auth)/auth.module.scss";
 import Link from "next/link";
 import { Input } from "@/common/components";
@@ -16,7 +16,7 @@ export default function ResetPassword() {
   async function onForgotPassword(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      await forgotPassword({ email });
+      await forgotPassword({ email }, router);
       router.push("/check-email");
     } catch {
       setError("Nieprawidłowy email");

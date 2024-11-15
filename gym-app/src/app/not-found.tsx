@@ -9,10 +9,10 @@ export default function NotFound() {
     <div className={styles.container}>
       <p className={styles.info}>Ooops..</p>
       <p className={styles.status}>404</p>
-      <p className={styles.statusMessage}>PAGE NOT FOUND</p>
+      <p className={styles.statusMessage}>Nie znaleziono strony</p>
       <div className={styles.buttonContainer}>
         <Link href="/">
-          <Button className={styles.button}>Go to Home Page</Button>
+          <Button className={styles.button}>Wróć na stronę główną</Button>
         </Link>
       </div>
     </div>

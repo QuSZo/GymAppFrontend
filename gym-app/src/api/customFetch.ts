@@ -1,5 +1,5 @@
-import { API_URL } from "@/api/conf";
-import Router from "next/router";
+import { API_URL } from "@/api/controllers/conf";
+import { useRouter } from "next/navigation";
 
 type commandMethods = "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -25,24 +25,45 @@ function getHeaders() {
   return headers;
 }
 
-export async function customQuery(url: string, signal?: AbortSignal): Promise<Response> {
+export async function customQuery(url: string, router: ReturnType<typeof useRouter>, signal?: AbortSignal): Promise<Response> {
   const response = await fetch(API_URL + url, {
     signal: signal,
     headers: getHeaders(),
   });
   if (!response.ok) {
-    Router.push("/tokenExpiry");
+    if (response.status === 401) {
+      router.push("/unauthorized");
+    }
+    if (response.status === 403) {
+      router.push("/forbidden");
+    }
+    if (response.status >= 500 && response.status <= 599) {
+      router.push("/error");
+    } else {
+      throw new Error(`${response.statusText}`);
+    }
   }
   return response;
 }
 
-export async function customCommand<TCommand>(url: string, method: commandMethods, body?: TCommand): Promise<Response> {
+export async function customCommand<TCommand>(
+  url: string,
+  method: commandMethods,
+  router: ReturnType<typeof useRouter>,
+  body?: TCommand,
+): Promise<Response> {
   const response = await fetch(API_URL + url, {
     method: method,
     headers: getHeaders(),
     body: JSON.stringify(body),
   });
-  if (!response.ok) throw new Error(`${response.statusText}`);
+  if (!response.ok) {
+    if (router && response.status === 401) {
+      router.push("/tokenExpiry");
+    } else {
+      throw new Error(`${response.statusText}`);
+    }
+  }
 
   return response;
 }

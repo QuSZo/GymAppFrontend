@@ -5,7 +5,7 @@ export default function middleware(request: NextRequest): NextResponse {
   const workoutPathRegex = /^\/workout\/\d{4}-\d{2}-\d{2}$/;
 
   if (!isLoggedIn) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
 
   if (

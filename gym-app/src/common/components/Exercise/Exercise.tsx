@@ -1,6 +1,6 @@
 import styles from "./Exercise.module.scss";
 import ExerciseSet from "@/common/components/Exercise/ExerciseSet/ExerciseSet";
-import { deleteExercise, exerciseDto } from "@/api/exercise";
+import { deleteExercise, exerciseDto } from "@/api/controllers/exercise";
 import {
   createExerciseSet,
   createExerciseSetCommand,
@@ -8,13 +8,14 @@ import {
   exerciseSetDto,
   updateExerciseSetCommand,
   updateExerciseSet,
-} from "@/api/exerciseSet";
+} from "@/api/controllers/exerciseSet";
 import AddExerciseSetDialog, { exerciseSet } from "@/common/components/Exercise/AddOrEditExerciseSetDialog/AddExerciseSetDialog";
 import { useRef, useState } from "react";
 import EditExerciseSetDialog from "@/common/components/Exercise/AddOrEditExerciseSetDialog/EditExerciseSetDialog";
 import { Icon } from "@/common/components/Icons/Icon/Icon";
 import { UUID } from "node:crypto";
 import DeletePopover from "@/common/components/DeletePopover/DeletePopover";
+import { useRouter } from "next/navigation";
 
 type ExerciseProps = {
   exercise: exerciseDto;
@@ -26,26 +27,27 @@ export default function Exercise(props: ExerciseProps) {
   const [showPopover, setShowPopover] = useState(false);
   const [selectedSet, setSelectedSet] = useState<exerciseSetDto>();
   const popoverButtonRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   async function onDeleteExercise() {
-    await deleteExercise(props.exercise.id);
+    await deleteExercise(props.exercise.id, router);
     props.onRefresh();
   }
 
   async function onAddExerciseSet(exerciseSet: exerciseSet) {
     const command: createExerciseSetCommand = { exerciseId: props.exercise.id, reps: exerciseSet.reps, quantity: exerciseSet.quantity };
-    await createExerciseSet(command);
+    await createExerciseSet(command, router);
     props.onRefresh();
   }
 
   async function onDeleteExerciseSet(id: UUID) {
-    await deleteExerciseSet(id);
+    await deleteExerciseSet(id, router);
     props.onRefresh();
   }
 
   async function onEditExerciseSet(exerciseSetId: UUID, exerciseSet: exerciseSet) {
     const command: updateExerciseSetCommand = { reps: exerciseSet.reps, quantity: exerciseSet.quantity };
-    await updateExerciseSet(exerciseSetId, command);
+    await updateExerciseSet(exerciseSetId, command, router);
     props.onRefresh();
   }
 

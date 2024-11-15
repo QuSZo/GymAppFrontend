@@ -1,6 +1,6 @@
 import ExerciseSkeleton from "@/common/components/Exercise/ExerciseSkeleton";
 import Exercise from "@/common/components/Exercise/Exercise";
-import { workoutDetailsDto } from "@/api/workout";
+import { workoutDetailsDto } from "@/api/controllers/workout";
 
 type WorkoutProps = {
   isLoading: boolean;

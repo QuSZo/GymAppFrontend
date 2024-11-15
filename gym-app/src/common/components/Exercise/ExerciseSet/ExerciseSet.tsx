@@ -1,5 +1,5 @@
 import styles from "./ExerciseSet.module.scss";
-import { exerciseSetDto } from "@/api/exerciseSet";
+import { exerciseSetDto } from "@/api/controllers/exerciseSet";
 
 type ExerciseSetProps = {
   exerciseSet: exerciseSetDto;

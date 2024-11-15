@@ -1,20 +1,22 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { register } from "@/api/auth";
+import { register } from "@/api/controllers/auth";
 import styles from "@/app/(auth)/auth.module.scss";
 import Link from "next/link";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
 
   async function onRegister(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await register({ email: email, password: password });
+    await register({ email: email, password: password }, router);
   }
 
   return (
