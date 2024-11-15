@@ -66,7 +66,6 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
 
   useEffect(() => {
     if (reload) {
-      console.log("XD1");
       setSelectedDate(dateOnly(new Date()));
       setReload(false);
     }
@@ -74,7 +73,6 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
 
   useEffect(() => {
     if (!reload) {
-      console.log("XD2");
       history.pushState({}, "", `/workout/${selectedDate.toLocaleDateString("sv-SE")}`);
       loadWorkoutData();
     }

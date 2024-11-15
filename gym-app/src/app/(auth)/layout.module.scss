@@ -1,0 +1,59 @@
+@import "@/styles/variables.module";
+
+.container {
+  display: flex;
+  flex-grow: 1;
+
+  .header {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 5vw;
+
+    a {
+      text-decoration: none;
+      color: rgb($color-text);
+      @include font-normal-bold;
+    }
+  }
+
+  .left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 12vw;
+  }
+
+  .imageWrapper {
+    position: relative;
+    width: 50%;
+
+    .image {
+      object-fit: cover;
+      border-radius: 40px 0 0 40px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .container {
+    .left {
+      padding: 40px 10vw;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .container {
+    .left {
+      width: 100%;
+    }
+    .imageWrapper {
+      display: none;
+    }
+  }
+}

@@ -14,8 +14,8 @@ export type createExerciseCommand = {
   workoutId: UUID;
 };
 
-export async function addExercise(command: createExerciseCommand): Promise<UUID> {
-  return await customCommand<createExerciseCommand>("exercises", "POST", command);
+export async function addExercise(command: createExerciseCommand) {
+  await customCommand<createExerciseCommand>("exercises", "POST", command);
 }
 
 export async function deleteExercise(id: UUID) {

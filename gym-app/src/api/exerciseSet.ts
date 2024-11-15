@@ -19,12 +19,12 @@ export type updateExerciseSetCommand = {
   reps: number;
 };
 
-export async function createExerciseSet(command: createExerciseSetCommand): Promise<UUID> {
-  return await customCommand("exercise-sets", "POST", command);
+export async function createExerciseSet(command: createExerciseSetCommand) {
+  await customCommand("exercise-sets", "POST", command);
 }
 
-export async function updateExerciseSet(exerciseSetId: UUID, command: updateExerciseSetCommand): Promise<UUID> {
-  return await customCommand(`exercise-sets/${exerciseSetId}`, "PUT", command);
+export async function updateExerciseSet(exerciseSetId: UUID, command: updateExerciseSetCommand) {
+  await customCommand(`exercise-sets/${exerciseSetId}`, "PUT", command);
 }
 
 export async function deleteExerciseSet(id: UUID) {

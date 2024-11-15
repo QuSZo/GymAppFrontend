@@ -3,8 +3,10 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
-import { customCommand } from "@/api/customFetch";
 import { jwtDecode } from "jwt-decode";
+import { signIn } from "@/api/auth";
+import { API_URL } from "@/api/conf";
+import Router from "next/router";
 
 type AuthContextProps = {
   reload: boolean;
@@ -28,7 +30,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const login = async (email: string, password: string) => {
-    const response = await customCommand("users/sign-in", "POST", { email, password });
+    const response = await signIn({ email, password });
     const { accessToken } = response;
     const now = new Date();
     const expiryClaim = jwtDecode(accessToken).exp;

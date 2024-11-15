@@ -19,18 +19,21 @@ export type createWorkoutCommand = {
 };
 
 export async function getWorkouts(signal?: AbortSignal): Promise<workoutsDto[]> {
-  return await customQuery("workouts", signal);
+  const response = await customQuery("workouts", signal);
+  return response.json();
 }
 
 export async function getWorkout(id: UUID): Promise<workoutDetailsDto> {
-  return await customQuery("workouts/" + `${id}`);
+  const response = await customQuery("workouts/" + `${id}`);
+  return response.json();
 }
 
 export async function getWorkoutByDate(date: Date, signal?: AbortSignal): Promise<workoutDetailsDto> {
   const dateString = date.toLocaleDateString("sv-SE");
-  return await customQuery<workoutDetailsDto>("workouts/" + `${dateString}`, signal);
+  const response = await customQuery("workouts/" + `${dateString}`, signal);
+  return response.json();
 }
 
-export async function createWorkout(command: createWorkoutCommand): Promise<UUID> {
-  return await customCommand<createWorkoutCommand>("workouts", "POST", command);
+export async function createWorkout(command: createWorkoutCommand) {
+  await customCommand<createWorkoutCommand>("workouts", "POST", command);
 }

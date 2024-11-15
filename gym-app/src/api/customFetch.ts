@@ -1,4 +1,5 @@
 import { API_URL } from "@/api/conf";
+import Router from "next/router";
 
 type commandMethods = "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -24,20 +25,18 @@ function getHeaders() {
   return headers;
 }
 
-// eslint-disable-next-line
-export async function customQuery<T>(url: string, signal?: AbortSignal): Promise<any> {
+export async function customQuery(url: string, signal?: AbortSignal): Promise<Response> {
   const response = await fetch(API_URL + url, {
     signal: signal,
     headers: getHeaders(),
   });
   if (!response.ok) {
-    throw new Error(`${response.status}`);
+    Router.push("/tokenExpiry");
   }
-  return response.json();
+  return response;
 }
 
-// eslint-disable-next-line
-export async function customCommand<TCommand>(url: string, method: commandMethods, body?: TCommand): Promise<any> {
+export async function customCommand<TCommand>(url: string, method: commandMethods, body?: TCommand): Promise<Response> {
   const response = await fetch(API_URL + url, {
     method: method,
     headers: getHeaders(),
@@ -45,10 +44,5 @@ export async function customCommand<TCommand>(url: string, method: commandMethod
   });
   if (!response.ok) throw new Error(`${response.statusText}`);
 
-  const contentType = response.headers.get("Content-Type");
-  if (contentType?.includes("application/json")) {
-    return response.json();
-  }
-
-  return null;
+  return response;
 }

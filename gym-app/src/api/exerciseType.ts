@@ -8,5 +8,6 @@ export type exerciseTypeDetails = {
 };
 
 export async function getExerciseTypes(): Promise<exerciseTypeDetails[]> {
-  return await customQuery("exercise-types");
+  const response = await customQuery("exercise-types");
+  return response.json();
 }

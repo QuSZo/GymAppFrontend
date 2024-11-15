@@ -1,0 +1,44 @@
+@import "@/styles/variables.module";
+
+.container {
+  display: flex;
+  height: 100%;
+  position: relative;
+
+  .informationContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+    .svg {
+      height: 100px;
+      .icon {
+        color: rgb($color-text);
+      }
+    }
+
+    .headerText {
+      @include font-big-light;
+      text-align: center;
+    }
+
+    .infoText {
+      @include font-smaller;
+      text-align: center;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    a {
+      text-decoration: none;
+      color: rgb($color-blue-hover);
+      font-weight: 500;
+    }
+  }
+}
