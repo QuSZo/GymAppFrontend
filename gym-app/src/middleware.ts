@@ -4,8 +4,12 @@ export default function middleware(request: NextRequest): NextResponse {
   const isLoggedIn = request.cookies.has("accessToken");
   const workoutPathRegex = /^\/workout\/\d{4}-\d{2}-\d{2}$/;
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn && request.nextUrl.pathname !== "/") {
     return NextResponse.redirect(new URL("/unauthorized", request.url));
+  }
+
+  if (!isLoggedIn && request.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   if (
