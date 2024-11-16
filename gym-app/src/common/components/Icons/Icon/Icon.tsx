@@ -5,12 +5,14 @@ import DeleteIcon from "./svgs/delete/deleteIcon.svg";
 import CalendarIcon from "./svgs/calendar/calendarIcon.svg";
 import EmailIcon from "./svgs/email/emailIcon.svg";
 import CheckIcon from "./svgs/check/checkIcon.svg";
+import ArrowUpIcon from "./svgs/arrows/arrowUp.svg";
+import ArrowDownIcon from "./svgs/arrows/arrowDown.svg";
 import styles from "../Icon.module.scss";
 import { forwardRef } from "react";
 
 type IconProps = {
   id?: string;
-  name: "add" | "addCircle" | "delete" | "calendar" | "email" | "check";
+  name: "add" | "addCircle" | "delete" | "calendar" | "email" | "check" | "arrowUp" | "arrowDown";
   onClick?: () => void;
   classNameSvg?: string;
   classNameIcon?: string;
@@ -37,6 +39,12 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props: IconProps, ref
       break;
     case "check":
       iconHref = `${CheckIcon}#CheckIcon`;
+      break;
+    case "arrowUp":
+      iconHref = `${ArrowUpIcon}#ArrowUpIcon`;
+      break;
+    case "arrowDown":
+      iconHref = `${ArrowDownIcon}#ArrowDownIcon`;
       break;
     default:
       iconHref = `${PlusIconBoldSvg}#AddIconSvg`;

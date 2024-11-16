@@ -6,28 +6,47 @@
   width: 100%;
   border-top: 2px solid rgb($color-border);
   padding: 10px 0;
-  gap: 20px;
+  gap: 15px;
 
   .mainTitleContainer {
     display: flex;
-    height: 20px;
     justify-content: space-between;
 
     .mainExerciseName {
       @include font-medium-bold;
     }
 
-    .svg {
-      cursor: pointer;
-      height: 80%;
+    .iconContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 100px;
 
-      .icon {
-        color: rgb($color-red);
+      .deleteSvg {
+        cursor: pointer;
+        height: 18px;
+
+        .deleteIcon {
+          color: rgb($color-red);
+        }
+
+        &:hover {
+          .deleteIcon {
+            color: rgb($color-red-hover);
+          }
+        }
       }
+      .svg {
+        cursor: pointer;
+        height: 18px;
 
-      &:hover {
         .icon {
-          color: rgb($color-red-hover);
+          color: rgb($color-blue);
+        }
+
+        &:hover {
+          .icon {
+            color: rgb($color-blue-hover);
+          }
         }
       }
     }

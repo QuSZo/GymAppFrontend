@@ -1,6 +1,6 @@
 import styles from "./Exercise.module.scss";
 import ExerciseSet from "@/common/components/Exercise/ExerciseSet/ExerciseSet";
-import { deleteExercise, exerciseDto } from "@/api/controllers/exercise";
+import { deleteExercise, exerciseDto, updateExerciseNumber } from "@/api/controllers/exercise";
 import {
   createExerciseSet,
   createExerciseSetCommand,
@@ -51,19 +51,42 @@ export default function Exercise(props: ExerciseProps) {
     props.onRefresh();
   }
 
+  async function onUpdateExerciseNumber(changeDirection: "up" | "down") {
+    await updateExerciseNumber(props.exercise.id, { changeDirection }, router);
+    props.onRefresh();
+  }
+
   return (
     <>
       <div className={styles.main}>
         <div className={styles.mainTitleContainer}>
           <p className={styles.mainExerciseName}>{props.exercise.exerciseTypeName}</p>
-          <Icon
-            ref={popoverButtonRef}
-            id={"showPopoverButton"}
-            onClick={() => setShowPopover(true)}
-            name={"delete"}
-            classNameIcon={styles.icon}
-            classNameSvg={styles.svg}
-          />
+          <div className={styles.iconContainer}>
+            <Icon
+              name={"arrowUp"}
+              onClick={async () => {
+                await onUpdateExerciseNumber("up");
+              }}
+              classNameIcon={styles.icon}
+              classNameSvg={styles.svg}
+            ></Icon>
+            <Icon
+              name={"arrowDown"}
+              onClick={async () => {
+                await onUpdateExerciseNumber("down");
+              }}
+              classNameIcon={styles.icon}
+              classNameSvg={styles.svg}
+            ></Icon>
+            <Icon
+              ref={popoverButtonRef}
+              id={"showPopoverButton"}
+              onClick={() => setShowPopover(true)}
+              name={"delete"}
+              classNameIcon={styles.deleteIcon}
+              classNameSvg={styles.deleteSvg}
+            />
+          </div>
         </div>
         <div className={styles.mainExerciseSetsContainer}>
           {props.exercise.exerciseSets.map((exerciseSet: exerciseSetDto, index: number) => (

@@ -15,10 +15,18 @@ export type createExerciseCommand = {
   workoutId: UUID;
 };
 
+export type updateExerciseCommand = {
+  changeDirection: "up" | "down";
+};
+
 export async function addExercise(command: createExerciseCommand, router: ReturnType<typeof useRouter>) {
   await customCommand<createExerciseCommand>("exercises", "POST", router, command);
 }
 
 export async function deleteExercise(id: UUID, router: ReturnType<typeof useRouter>) {
   await customCommand<createExerciseCommand>(`exercises/${id}`, "DELETE", router);
+}
+
+export async function updateExerciseNumber(id: UUID, command: updateExerciseCommand, router: ReturnType<typeof useRouter>) {
+  await customCommand<updateExerciseCommand>(`exercises/${id}`, "PUT", router, command);
 }
