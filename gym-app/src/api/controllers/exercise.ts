@@ -16,8 +16,13 @@ export type createExerciseCommand = {
 };
 
 export type updateExerciseCommand = {
-  changeDirection: "up" | "down";
+  changeDirection: ChangeDirectionEnum;
 };
+
+export enum ChangeDirectionEnum {
+  Up,
+  Down,
+}
 
 export async function addExercise(command: createExerciseCommand, router: ReturnType<typeof useRouter>) {
   await customCommand<createExerciseCommand>("exercises", "POST", router, command);
@@ -28,5 +33,5 @@ export async function deleteExercise(id: UUID, router: ReturnType<typeof useRout
 }
 
 export async function updateExerciseNumber(id: UUID, command: updateExerciseCommand, router: ReturnType<typeof useRouter>) {
-  await customCommand<updateExerciseCommand>(`exercises/${id}`, "PUT", router, command);
+  await customCommand<updateExerciseCommand>(`exercises/${id}/exercise-number`, "PUT", router, command);
 }

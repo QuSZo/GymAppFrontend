@@ -17,10 +17,15 @@ export default function Workout(props: WorkoutProps) {
     return <p>Nie znaleziono treningu</p>;
   }
 
+  function isLast(key: number): boolean {
+    if (props.workout && key === props.workout.exercises.length - 1) return true;
+    else return false;
+  }
+
   return (
     <>
-      {props.workout.exercises.map((exercise) => (
-        <Exercise key={exercise.id} exercise={exercise} onRefresh={props.onRefresh} />
+      {props.workout.exercises.map((exercise, key) => (
+        <Exercise key={key} exercise={exercise} isFirst={key === 0} isLast={isLast(key)} onRefresh={props.onRefresh} />
       ))}
     </>
   );

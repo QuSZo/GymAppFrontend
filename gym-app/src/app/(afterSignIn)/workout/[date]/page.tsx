@@ -114,7 +114,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
             <Workout isLoading={isLoading} workout={workout} onRefresh={loadWorkoutData} />
           </>
         )}
-        <CircleIconButton onClick={() => setShowPortal(true)}>Dodaj trening</CircleIconButton>
+        <CircleIconButton onClick={() => setShowPortal(true)}>{workout ? "Dodaj ćwiczenie" : "Dodaj trening"}</CircleIconButton>
       </div>
       <AddExerciseDialog
         portalRoot={"dialog"}

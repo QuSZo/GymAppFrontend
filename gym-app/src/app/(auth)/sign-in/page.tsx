@@ -6,6 +6,7 @@ import Button from "@/common/components/Button/Button";
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useAuthContext } from "@/common/contexts/authContext";
+import { ApiError } from "@/common/lib/ApiError";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -17,8 +18,12 @@ export default function SignInPage() {
     e.preventDefault();
     try {
       await login(email, password);
-    } catch {
-      setError("Nieprawidłowe dane logowania");
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setError(error.message);
+      } else {
+        setError("Coś poszło nie tak. Spróbuj ponownie.");
+      }
     }
   }
 

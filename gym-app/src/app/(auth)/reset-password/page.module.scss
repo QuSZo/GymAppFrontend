@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  .svg {
+    height: 100px;
+    .icon {
+      color: rgb($color-green);
+    }
+  }
+
+  .headerText {
+    @include font-big-light;
+    text-align: center;
+  }
+}

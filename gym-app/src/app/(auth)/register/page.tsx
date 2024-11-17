@@ -7,22 +7,34 @@ import Link from "next/link";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
 import { useRouter } from "next/navigation";
+import { ApiError } from "@/common/lib/ApiError";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   async function onRegister(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await register({ email: email, password: password }, router);
+    try {
+      await register({ email: email, password: password }, router);
+      router.push("/register-confirmation");
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setError(error.message);
+      } else {
+        setError("Coś poszło nie tak. Spróbuj ponownie.");
+      }
+    }
   }
 
   return (
     <form onSubmit={onRegister} className={styles.form}>
       <h1 className={styles.headerText}>Tworzenie konta</h1>
       <div className={styles.inputContainer}>
+        {error && <p className={styles.error}>{error}</p>}
         <Input
           value={email}
           name={"email"}
@@ -31,6 +43,7 @@ export default function RegisterPage() {
           errorMessage={"To nie jest mail"}
           onChange={(e) => {
             setEmail(e.target.value);
+            setError("");
           }}
           placeholder="Email"
           className={styles.input}
@@ -44,6 +57,7 @@ export default function RegisterPage() {
           errorMessage={"Hasło musi zawierać przynajmniej 8 znaków w tym 1 literę i 1 cyfrę"}
           onChange={(e) => {
             setPassword(e.target.value);
+            setError("");
           }}
           placeholder="Hasło"
           className={styles.input}
@@ -57,6 +71,7 @@ export default function RegisterPage() {
           errorMessage={"Hasła różnią się"}
           onChange={(e) => {
             setConfirmPassword(e.target.value);
+            setError("");
           }}
           placeholder="Potwierdź hasło"
           className={styles.input}

@@ -19,9 +19,10 @@ type IconProps = {
 };
 
 export const Icon = forwardRef<HTMLDivElement, IconProps>((props: IconProps, ref) => {
+  const { id, name, onClick, classNameSvg, classNameIcon, ...restProps } = props;
   let iconHref;
 
-  switch (props.name) {
+  switch (name) {
     case "add":
       iconHref = `${PlusIconBoldSvg}#AddIconSvg`;
       break;
@@ -53,8 +54,8 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props: IconProps, ref
 
   return (
     <div ref={ref}>
-      <svg id={props.id} onClick={props.onClick} className={cn(styles.svg, props.classNameSvg)}>
-        <use href={iconHref} className={cn(styles.icon, props.classNameIcon)} />
+      <svg id={id} onClick={onClick} className={cn(styles.svg, classNameSvg)} {...restProps}>
+        <use href={iconHref} className={cn(styles.icon, classNameIcon)} />
       </svg>
     </div>
   );

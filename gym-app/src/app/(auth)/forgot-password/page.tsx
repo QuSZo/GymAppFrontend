@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
 import { useRouter } from "next/navigation";
+import { ApiError } from "@/common/lib/ApiError";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -18,8 +19,16 @@ export default function ResetPassword() {
     try {
       await forgotPassword({ email }, router);
       router.push("/check-email");
-    } catch {
-      setError("Nieprawidłowy email");
+    } catch (error) {
+      if (error instanceof ApiError) {
+        if (error.code === "invalid_credentials") {
+          setError("Email nie istnieje.");
+        } else {
+          setError(error.message);
+        }
+      } else {
+        setError("Coś poszło nie tak. Spróbuj ponownie.");
+      }
     }
   }
 
@@ -47,7 +56,7 @@ export default function ResetPassword() {
         Prześlij link do resetu
       </Button>
       <Link href={"/sign-in"} className={styles.registerLink}>
-        Powróć, aby się zalogować!
+        Powróć, aby się zalogować.
       </Link>
     </form>
   );

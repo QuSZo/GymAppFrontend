@@ -1,5 +1,6 @@
 import { API_URL } from "@/api/controllers/conf";
 import { useRouter } from "next/navigation";
+import { ApiError } from "@/common/lib/ApiError";
 
 type commandMethods = "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -25,6 +26,11 @@ function getHeaders() {
   return headers;
 }
 
+type ErrorResponse = {
+  code: string;
+  reason: string;
+};
+
 export async function customQuery(url: string, router: ReturnType<typeof useRouter>, signal?: AbortSignal): Promise<Response> {
   const response = await fetch(API_URL + url, {
     signal: signal,
@@ -33,12 +39,13 @@ export async function customQuery(url: string, router: ReturnType<typeof useRout
   if (!response.ok) {
     if (response.status === 401) {
       router.push("/unauthorized");
-    }
-    if (response.status === 403) {
+    } else if (response.status === 403) {
       router.push("/forbidden");
-    }
-    if (response.status >= 500 && response.status <= 599) {
+    } else if (response.status >= 500 && response.status <= 599) {
       router.push("/error");
+    } else if (response.status === 400) {
+      const errorResponse: ErrorResponse = await response.json();
+      throw new ApiError(errorResponse.code);
     } else {
       throw new Error(`${response.statusText}`);
     }
@@ -58,8 +65,16 @@ export async function customCommand<TCommand>(
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    if (router && response.status === 401) {
-      router.push("/tokenExpiry");
+    if (response.status === 401) {
+      router.push("/unauthorized");
+    } else if (response.status === 403) {
+      router.push("/forbidden");
+    } else if (response.status >= 500 && response.status <= 599) {
+      router.push("/error");
+    } else if (response.status === 400) {
+      const errorResponse: ErrorResponse = await response.json();
+      console.log(errorResponse);
+      throw new ApiError(errorResponse.code);
     } else {
       throw new Error(`${response.statusText}`);
     }

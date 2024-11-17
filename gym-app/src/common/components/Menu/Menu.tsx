@@ -25,9 +25,9 @@ export function Menu() {
             Trening
           </Link>
         </li>
-        <li className={styles.menuItem}>
-          <Link href="/ranking">Ranking</Link>
-        </li>
+        {/*<li className={styles.menuItem}>*/}
+        {/*  <Link href="/ranking">Ranking</Link>*/}
+        {/*</li>*/}
         <li>
           <Button type={"button"} onClick={handleLogOut}>
             Wyloguj

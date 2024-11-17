@@ -48,6 +48,16 @@
             color: rgb($color-blue-hover);
           }
         }
+
+        &[data-inactive="true"] {
+          cursor: default;
+
+          &:hover {
+            .icon {
+              color: rgb($color-blue);
+            }
+          }
+        }
       }
     }
   }

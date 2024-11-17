@@ -1,13 +1,13 @@
 import styles from "./Exercise.module.scss";
 import ExerciseSet from "@/common/components/Exercise/ExerciseSet/ExerciseSet";
-import { deleteExercise, exerciseDto, updateExerciseNumber } from "@/api/controllers/exercise";
+import { ChangeDirectionEnum, deleteExercise, exerciseDto, updateExerciseNumber } from "@/api/controllers/exercise";
 import {
   createExerciseSet,
   createExerciseSetCommand,
   deleteExerciseSet,
   exerciseSetDto,
-  updateExerciseSetCommand,
   updateExerciseSet,
+  updateExerciseSetCommand,
 } from "@/api/controllers/exerciseSet";
 import AddExerciseSetDialog, { exerciseSet } from "@/common/components/Exercise/AddOrEditExerciseSetDialog/AddExerciseSetDialog";
 import { useRef, useState } from "react";
@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 
 type ExerciseProps = {
   exercise: exerciseDto;
+  isFirst: boolean;
+  isLast: boolean;
   onRefresh: () => void;
 };
 
@@ -51,7 +53,9 @@ export default function Exercise(props: ExerciseProps) {
     props.onRefresh();
   }
 
-  async function onUpdateExerciseNumber(changeDirection: "up" | "down") {
+  async function onUpdateExerciseNumber(changeDirection: ChangeDirectionEnum) {
+    if (props.isFirst && changeDirection === ChangeDirectionEnum.Up) return;
+    else if (props.isLast && changeDirection === ChangeDirectionEnum.Down) return;
     await updateExerciseNumber(props.exercise.id, { changeDirection }, router);
     props.onRefresh();
   }
@@ -65,18 +69,20 @@ export default function Exercise(props: ExerciseProps) {
             <Icon
               name={"arrowUp"}
               onClick={async () => {
-                await onUpdateExerciseNumber("up");
+                await onUpdateExerciseNumber(ChangeDirectionEnum.Up);
               }}
               classNameIcon={styles.icon}
               classNameSvg={styles.svg}
+              data-inactive={props.isFirst.toString()}
             ></Icon>
             <Icon
               name={"arrowDown"}
               onClick={async () => {
-                await onUpdateExerciseNumber("down");
+                await onUpdateExerciseNumber(ChangeDirectionEnum.Down);
               }}
               classNameIcon={styles.icon}
               classNameSvg={styles.svg}
+              data-inactive={props.isLast.toString()}
             ></Icon>
             <Icon
               ref={popoverButtonRef}
