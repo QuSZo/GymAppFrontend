@@ -4,7 +4,6 @@ import styles from "./page.module.scss";
 import DayPicker from "@/common/components/DayPicker/DayPicker";
 import { useEffect, useRef, useState } from "react";
 import { getWorkouts, workoutsDto, workoutDetailsDto, getWorkoutByDate, createWorkout } from "@/api/controllers/workout";
-import CircleIconButton from "@/common/components/CircleIconButton/CircleIconButton";
 import AddExerciseDialog from "@/app/(afterSignIn)/_components/AddExerciseDialog";
 import { addExercise } from "@/api/controllers/exercise";
 import { exerciseCategory, getExerciseCategories } from "@/api/controllers/exerciseCategory";
@@ -14,6 +13,11 @@ import Workout from "@/common/components/Workout/Workout";
 import { dateOnly } from "@/utils/dateOnly";
 import { useAuthContext } from "@/common/contexts/authContext";
 import { useRouter } from "next/navigation";
+import Button from "@/common/components/Button/Button";
+import { Icon } from "@/common/components/Icons/Icon/Icon";
+import Calendar from "@/common/components/ReactCalendar/Calendar/Calendar";
+import * as React from "react";
+import SummaryWorkoutDialog from "@/app/(afterSignIn)/_components/SummaryWorkoutDialog";
 
 type WorkoutForDatePageProps = {
   params: {
@@ -29,6 +33,8 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   const [exerciseCategories, setExerciseCategories] = useState<exerciseCategory[]>([]);
   const [exerciseTypes, setExerciseTypes] = useState<exerciseTypeDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [workoutToCopy, setWorkoutToCopy] = useState<Date | undefined>();
   const { reload, setReload } = useAuthContext();
   const router = useRouter();
 
@@ -59,12 +65,6 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (error) {
-  //     throw new AuthRequiredError();
-  //   }
-  // }, [error]);
 
   useEffect(() => {
     if (reload) {
@@ -114,7 +114,18 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
             <Workout isLoading={isLoading} workout={workout} onRefresh={loadWorkoutData} />
           </>
         )}
-        <CircleIconButton onClick={() => setShowPortal(true)}>{workout ? "Dodaj ćwiczenie" : "Dodaj trening"}</CircleIconButton>
+        <div className={styles.iconWrapper} data-centered={(!workout).toString()}>
+          {!workout && (
+            <Button onClick={() => setShowCalendar(true)} className={styles.buttonWithIcon} styling={"cancel"}>
+              <Icon name={"calendar"} classNameSvg={styles.svg} classNameIcon={styles.icon} />
+              Skopiuj trening
+            </Button>
+          )}
+          <Button onClick={() => setShowPortal(true)} className={styles.buttonWithIcon}>
+            <Icon name="add" classNameSvg={styles.svg} classNameIcon={styles.icon} />
+            Dodaj ćwiczenie
+          </Button>
+        </div>
       </div>
       <AddExerciseDialog
         portalRoot={"dialog"}
@@ -124,6 +135,31 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
         exerciseCategories={exerciseCategories}
         exerciseTypes={exerciseTypes}
       />
+      <Calendar
+        showCalendar={showCalendar}
+        onClose={() => setShowCalendar(false)}
+        labeledDays={workoutsDates}
+        mode={"single"}
+        onDayClick={(date: Date) => {
+          setWorkoutToCopy(date);
+        }}
+        selected={selectedDate}
+        defaultMonth={selectedDate}
+      ></Calendar>
+      {workoutToCopy && (
+        <SummaryWorkoutDialog
+          destinationDate={selectedDate}
+          sourceDate={workoutToCopy ?? new Date()}
+          portalRoot={"dialog"}
+          show={true}
+          onClose={() => setWorkoutToCopy(undefined)}
+          onRefresh={loadWorkoutData}
+          onPrevious={() => {
+            setWorkoutToCopy(undefined);
+            setShowCalendar(true);
+          }}
+        ></SummaryWorkoutDialog>
+      )}
     </>
   );
 }

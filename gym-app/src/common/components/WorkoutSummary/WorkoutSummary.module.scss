@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 10px;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    gap: 7px;
+  }
+}

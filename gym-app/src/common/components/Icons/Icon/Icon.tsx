@@ -10,7 +10,7 @@ import ArrowDownIcon from "./svgs/arrows/arrowDown.svg";
 import styles from "../Icon.module.scss";
 import { forwardRef } from "react";
 
-type IconProps = {
+export type IconProps = {
   id?: string;
   name: "add" | "addCircle" | "delete" | "calendar" | "email" | "check" | "arrowUp" | "arrowDown";
   onClick?: () => void;
@@ -53,7 +53,7 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props: IconProps, ref
   }
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className={styles.container}>
       <svg id={id} onClick={onClick} className={cn(styles.svg, classNameSvg)} {...restProps}>
         <use href={iconHref} className={cn(styles.icon, classNameIcon)} />
       </svg>

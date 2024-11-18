@@ -1,12 +1,16 @@
 @import "@/styles/variables.module";
 
-.svg {
-  display: inline-block;
-  height: 40px;
-  aspect-ratio: 1;
+.container {
+  display: flex;
 
-  .icon {
-    width: 10px;
-    color: rgb($color-blue-hover);
+  .svg {
+    display: inline-block;
+    height: 40px;
+    aspect-ratio: 1;
+
+    .icon {
+      width: 10px;
+      color: rgb($color-blue-hover);
+    }
   }
 }

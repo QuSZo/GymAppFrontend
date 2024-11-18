@@ -1,0 +1,32 @@
+@import "@/styles/variables.module";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 2px solid rgb($color-border);
+  padding: 10px 0;
+  gap: 10px;
+
+  .mainExerciseName {
+    width: 100%;
+    @include font-small;
+  }
+
+  .mainExerciseSetsContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    gap: 7px;
+
+    .mainExerciseName {
+      @include font-smaller;
+    }
+  }
+}

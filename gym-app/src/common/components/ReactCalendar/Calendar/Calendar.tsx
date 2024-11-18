@@ -1,22 +1,20 @@
 import * as React from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { Icon } from "@/common/components/Icons/Icon/Icon";
 import Dialog from "@/common/components/Dialog/Dialog";
 import styles from "./Calendar.module.scss";
-import { useState } from "react";
 import { pl } from "date-fns/locale/pl";
 
 export type CalendarProps = {
+  showCalendar: boolean;
+  onClose: () => void;
   labeledDays?: Date[];
 } & React.ComponentProps<typeof DayPicker>;
 
 function Calendar({ labeledDays, showOutsideDays = true, onDayClick, ...props }: CalendarProps) {
-  const [showCalendar, setShowCalendar] = useState(false);
-
   // eslint-disable-next-line
   function handleOnDayClick(date: Date, modifiers: any, event: React.MouseEvent) {
-    setShowCalendar(false);
+    props.onClose();
     if (onDayClick) {
       onDayClick(date, modifiers, event);
     }
@@ -24,11 +22,10 @@ function Calendar({ labeledDays, showOutsideDays = true, onDayClick, ...props }:
 
   return (
     <>
-      <Icon classNameIcon={styles.icon} classNameSvg={styles.svg} name={"calendar"} onClick={() => setShowCalendar(true)} />
       <Dialog
         portalRoot={"dialog"}
-        show={showCalendar}
-        onClose={() => setShowCalendar(false)}
+        show={props.showCalendar}
+        onClose={() => props.onClose()}
         classNameModal={styles.modal}
         classNameOverflow={styles.overflow}
       >

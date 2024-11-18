@@ -19,6 +19,11 @@ export type createWorkoutCommand = {
   exerciseTypeId: UUID;
 };
 
+export type copyWorkoutCommand = {
+  destinationDate: string;
+  sourceDate: string;
+};
+
 export async function getWorkouts(router: ReturnType<typeof useRouter>, signal?: AbortSignal): Promise<workoutsDto[]> {
   const response = await customQuery("workouts", router, signal);
   return response.json();
@@ -37,4 +42,12 @@ export async function getWorkoutByDate(date: Date, router: ReturnType<typeof use
 
 export async function createWorkout(command: createWorkoutCommand, router: ReturnType<typeof useRouter>) {
   await customCommand<createWorkoutCommand>("workouts", "POST", router, command);
+}
+
+export async function copyWorkout(destinationDate: Date, sourceDate: Date, router: ReturnType<typeof useRouter>) {
+  const command: copyWorkoutCommand = {
+    destinationDate: destinationDate.toLocaleDateString("sv-SE"),
+    sourceDate: sourceDate.toLocaleDateString("sv-SE"),
+  };
+  await customCommand<copyWorkoutCommand>("workouts/copy", "POST", router, command);
 }

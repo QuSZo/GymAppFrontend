@@ -2,19 +2,12 @@
 
 .main {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1;
+  padding: 10px 20px;
   background-color: rgb($color-blue);
-  padding: 15px;
+  border-radius: 10px;
   color: rgb($color-text);
-  border-radius: 50%;
-  position: fixed;
-  bottom: 50px;
-  right: 60px;
-  box-shadow: rgb($color-blue) 0px 0px 6px;
-  transition: box-shadow 0.3s;
   gap: 10px;
 
   .svg {
@@ -31,11 +24,5 @@
   &:hover {
     background-color: rgb($color-blue-hover);
     box-shadow: 0px 0px 8px rgb($color-blue-hover);
-  }
-}
-@media only screen and (max-width: 600px) {
-  .main {
-    bottom: 20px;
-    right: 30px;
   }
 }

@@ -35,6 +35,17 @@
       display: flex;
       justify-content: right;
       width: 20%;
+
+      .svg {
+        cursor: pointer;
+        height: 100%;
+
+        &:hover {
+          .icon {
+            color: #1e96ff;
+          }
+        }
+      }
     }
   }
 

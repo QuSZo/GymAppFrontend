@@ -1,16 +1,5 @@
 @import "@/styles/variables.module";
 
-.svg {
-  cursor: pointer;
-  height: 100%;
-
-  &:hover {
-    .icon {
-      color: #1e96ff;
-    }
-  }
-}
-
 .overflow {
   .modal {
     display: flex;
