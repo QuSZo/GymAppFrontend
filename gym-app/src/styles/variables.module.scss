@@ -41,13 +41,29 @@ $padding-main-container-mobile: 20px 5vw;
   font-size: 18px;
 }
 
+@mixin font-medium {
+  font-weight: 300;
+  font-size: 18px;
+}
+
 @mixin font-small {
   font-weight: 300;
   font-size: 16px;
 }
 
+@mixin font-small-bold {
+  font-weight: 500;
+  font-size: 16px;
+}
+
 @mixin font-smaller {
   font-weight: 300;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+@mixin font-smaller-bold {
+  font-weight: 500;
   font-size: 14px;
   line-height: 1.4;
 }

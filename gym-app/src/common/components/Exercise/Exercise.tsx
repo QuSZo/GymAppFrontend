@@ -16,6 +16,7 @@ import { Icon } from "@/common/components/Icons/Icon/Icon";
 import { UUID } from "node:crypto";
 import DeletePopover from "@/common/components/DeletePopover/DeletePopover";
 import { useRouter } from "next/navigation";
+import { useLoaderContext } from "@/common/contexts/loaderContext";
 
 type ExerciseProps = {
   exercise: exerciseDto;
@@ -30,33 +31,44 @@ export default function Exercise(props: ExerciseProps) {
   const [selectedSet, setSelectedSet] = useState<exerciseSetDto>();
   const popoverButtonRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { setLoading } = useLoaderContext();
 
   async function onDeleteExercise() {
+    setLoading(true);
     await deleteExercise(props.exercise.id, router);
+    setLoading(false);
     props.onRefresh();
   }
 
   async function onAddExerciseSet(exerciseSet: exerciseSet) {
+    setLoading(true);
     const command: createExerciseSetCommand = { exerciseId: props.exercise.id, reps: exerciseSet.reps, quantity: exerciseSet.quantity };
     await createExerciseSet(command, router);
+    setLoading(false);
     props.onRefresh();
   }
 
   async function onDeleteExerciseSet(id: UUID) {
+    setLoading(true);
     await deleteExerciseSet(id, router);
+    setLoading(false);
     props.onRefresh();
   }
 
   async function onEditExerciseSet(exerciseSetId: UUID, exerciseSet: exerciseSet) {
+    setLoading(true);
     const command: updateExerciseSetCommand = { reps: exerciseSet.reps, quantity: exerciseSet.quantity };
     await updateExerciseSet(exerciseSetId, command, router);
+    setLoading(false);
     props.onRefresh();
   }
 
   async function onUpdateExerciseNumber(changeDirection: ChangeDirectionEnum) {
+    setLoading(true);
     if (props.isFirst && changeDirection === ChangeDirectionEnum.Up) return;
     else if (props.isLast && changeDirection === ChangeDirectionEnum.Down) return;
     await updateExerciseNumber(props.exercise.id, { changeDirection }, router);
+    setLoading(false);
     props.onRefresh();
   }
 

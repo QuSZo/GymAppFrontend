@@ -7,12 +7,14 @@ import EmailIcon from "./svgs/email/emailIcon.svg";
 import CheckIcon from "./svgs/check/checkIcon.svg";
 import ArrowUpIcon from "./svgs/arrows/arrowUp.svg";
 import ArrowDownIcon from "./svgs/arrows/arrowDown.svg";
+import VisibilityIcon from "./svgs/visibility/visibility.svg";
+import VisibilityOffIcon from "./svgs/visibility/visibilityOff.svg";
 import styles from "../Icon.module.scss";
 import { forwardRef } from "react";
 
 export type IconProps = {
   id?: string;
-  name: "add" | "addCircle" | "delete" | "calendar" | "email" | "check" | "arrowUp" | "arrowDown";
+  name: "add" | "addCircle" | "delete" | "calendar" | "email" | "check" | "arrowUp" | "arrowDown" | "visibility" | "visibilityOff";
   onClick?: () => void;
   classNameSvg?: string;
   classNameIcon?: string;
@@ -46,6 +48,12 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>((props: IconProps, ref
       break;
     case "arrowDown":
       iconHref = `${ArrowDownIcon}#ArrowDownIcon`;
+      break;
+    case "visibility":
+      iconHref = `${VisibilityIcon}#VisibilityIcon`;
+      break;
+    case "visibilityOff":
+      iconHref = `${VisibilityOffIcon}#VisibilityOffIcon`;
       break;
     default:
       iconHref = `${PlusIconBoldSvg}#AddIconSvg`;

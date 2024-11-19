@@ -1,6 +1,7 @@
 import ExerciseSkeleton from "@/common/components/Exercise/ExerciseSkeleton";
 import Exercise from "@/common/components/Exercise/Exercise";
 import { workoutDetailsDto } from "@/api/controllers/workout";
+import { useEffect, useRef } from "react";
 
 type WorkoutProps = {
   isLoading: boolean;

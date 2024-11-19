@@ -18,6 +18,8 @@ import { Icon } from "@/common/components/Icons/Icon/Icon";
 import Calendar from "@/common/components/ReactCalendar/Calendar/Calendar";
 import * as React from "react";
 import SummaryWorkoutDialog from "@/app/(afterSignIn)/_components/SummaryWorkoutDialog";
+import Loader from "@/common/components/Loader/Loader";
+import { useLoaderContext } from "@/common/contexts/loaderContext";
 
 type WorkoutForDatePageProps = {
   params: {
@@ -37,10 +39,11 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   const [workoutToCopy, setWorkoutToCopy] = useState<Date | undefined>();
   const { reload, setReload } = useAuthContext();
   const router = useRouter();
+  const { loading, setLoading } = useLoaderContext();
 
   const controllerRef = useRef<AbortController | null>(null);
 
-  const loadWorkoutData = async () => {
+  const loadWorkoutData = async (isFullRefresh: boolean) => {
     if (controllerRef.current) {
       controllerRef.current.abort();
     }
@@ -49,7 +52,12 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
     controllerRef.current = controller;
     const signal = controller.signal;
 
-    setIsLoading(true);
+    if (isFullRefresh) {
+      setIsLoading(true);
+    } else {
+      setLoading(true);
+    }
+
     try {
       const [allWorkouts, selectedWorkout] = await Promise.all([
         getWorkouts(router, signal),
@@ -61,7 +69,11 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
     } catch {
     } finally {
       if (!signal.aborted) {
-        setIsLoading(false);
+        if (isFullRefresh) {
+          setIsLoading(false);
+        } else {
+          setLoading(false);
+        }
       }
     }
   };
@@ -76,7 +88,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   useEffect(() => {
     if (!reload) {
       history.pushState({}, "", `/workout/${selectedDate.toLocaleDateString("sv-SE")}`);
-      loadWorkoutData();
+      loadWorkoutData(true);
     }
   }, [selectedDate]);
 
@@ -96,13 +108,14 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   workoutsDates = workouts.map((workout) => new Date(workout.date));
 
   async function onAddExercise(exerciseTypeId: UUID) {
+    setLoading(true);
     if (workout == undefined) {
       await createWorkout({ exerciseTypeId: exerciseTypeId, date: selectedDate.toLocaleDateString("sv-SE") }, router);
     } else {
       await addExercise({ exerciseTypeId: exerciseTypeId, workoutId: workout.id }, router);
     }
-
-    await loadWorkoutData();
+    setLoading(false);
+    await loadWorkoutData(false);
   }
 
   return (
@@ -111,7 +124,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
         {!reload && (
           <>
             <DayPicker onClick={setSelectedDate} date={selectedDate} numberOfDays={7} labeledDays={workoutsDates} className={styles.dayPicker} />
-            <Workout isLoading={isLoading} workout={workout} onRefresh={loadWorkoutData} />
+            <Workout isLoading={isLoading} workout={workout} onRefresh={() => loadWorkoutData(false)} />
           </>
         )}
         <div className={styles.iconWrapper} data-centered={(!workout).toString()}>
@@ -126,6 +139,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
             Dodaj ćwiczenie
           </Button>
         </div>
+        {loading && <Loader className={styles.loader} />}
       </div>
       <AddExerciseDialog
         portalRoot={"dialog"}
@@ -153,7 +167,7 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
           portalRoot={"dialog"}
           show={true}
           onClose={() => setWorkoutToCopy(undefined)}
-          onRefresh={loadWorkoutData}
+          onRefresh={() => loadWorkoutData(true)}
           onPrevious={() => {
             setWorkoutToCopy(undefined);
             setShowCalendar(true);

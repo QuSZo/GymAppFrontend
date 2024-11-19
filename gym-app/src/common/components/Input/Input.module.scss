@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  position: relative;
 
   .label {
     @include font-tiny;
@@ -24,6 +25,23 @@
 
     &:invalid[data-focused="true"] ~ .error {
       display: block;
+    }
+  }
+
+  .iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: absolute;
+    right: 30px;
+
+    .svg {
+      cursor: pointer;
+      height: 18px;
+      .icon {
+        color: rgb($color-text);
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import { ButtonHTMLAttributes } from "react";
 
 export type ButtonProps = {
   styling?: "normal" | "delete" | "cancel";
+  loading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button({ styling = "normal", ...props }: ButtonProps) {

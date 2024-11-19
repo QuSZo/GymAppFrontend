@@ -10,13 +10,13 @@
 
   .mainExerciseName {
     width: 100%;
-    @include font-small;
+    @include font-small-bold;
   }
 
   .mainExerciseSetsContainer {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 }
@@ -26,7 +26,11 @@
     gap: 7px;
 
     .mainExerciseName {
-      @include font-smaller;
+      @include font-smaller-bold;
+    }
+
+    .mainExerciseSetsContainer {
+      gap: 7px;
     }
   }
 }
