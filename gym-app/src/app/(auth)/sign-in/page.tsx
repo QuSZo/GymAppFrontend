@@ -72,7 +72,7 @@ export default function SignInPage() {
           Zaloguj się
         </Button>
         <Link href={"/register"} className={styles.registerLink}>
-          Pierwszy raz w GymApp? Załóż konto!
+          Pierwszy raz w GymNotes? Załóż konto!
         </Link>
       </form>
       {loading && <Loader className={styles.loader} />}

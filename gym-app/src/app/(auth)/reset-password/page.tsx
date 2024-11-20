@@ -25,9 +25,9 @@ export default function Page({ searchParams }: WorkoutForDatePageProps) {
   async function onResetPassword(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    await resetPassword({ token: searchParams.token, email: email, password: password }, router);
-    setLoading(false);
-    router.push("/reset-password-confirmation");
+    resetPassword({ token: searchParams.token, email: email, password: password }, router)
+      .then(() => router.push("/reset-password-confirmation"))
+      .finally(() => setLoading(false));
   }
 
   return (

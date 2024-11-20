@@ -16,7 +16,7 @@ export function Menu() {
     <div className={styles.container}>
       <p className={styles.appName}>
         <Link href="/" onClick={() => setReload(true)}>
-          GYMAPP
+          GYMNOTES
         </Link>
       </p>
       <ul className={styles.menu}>

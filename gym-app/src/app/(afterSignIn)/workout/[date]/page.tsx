@@ -110,12 +110,14 @@ export default function WorkoutForDatePage({ params }: WorkoutForDatePageProps) 
   async function onAddExercise(exerciseTypeId: UUID) {
     setLoading(true);
     if (workout == undefined) {
-      await createWorkout({ exerciseTypeId: exerciseTypeId, date: selectedDate.toLocaleDateString("sv-SE") }, router);
+      createWorkout({ exerciseTypeId: exerciseTypeId, date: selectedDate.toLocaleDateString("sv-SE") }, router)
+        .then(async () => loadWorkoutData(false))
+        .finally(() => setLoading(false));
     } else {
-      await addExercise({ exerciseTypeId: exerciseTypeId, workoutId: workout.id }, router);
+      addExercise({ exerciseTypeId: exerciseTypeId, workoutId: workout.id }, router)
+        .then(async () => loadWorkoutData(false))
+        .finally(() => setLoading(false));
     }
-    setLoading(false);
-    await loadWorkoutData(false);
   }
 
   return (

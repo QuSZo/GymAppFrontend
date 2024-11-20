@@ -30,9 +30,9 @@ export default function SummaryWorkoutDialog(props: SummaryWorkoutDialogProps) {
   async function onCopyWorkout() {
     props.onClose();
     setLoading(true);
-    await copyWorkout(props.destinationDate, props.sourceDate, router);
-    setLoading(false);
-    props.onRefresh();
+    copyWorkout(props.destinationDate, props.sourceDate, router)
+      .then(props.onRefresh)
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {

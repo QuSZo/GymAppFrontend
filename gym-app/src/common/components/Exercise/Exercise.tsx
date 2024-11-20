@@ -35,41 +35,41 @@ export default function Exercise(props: ExerciseProps) {
 
   async function onDeleteExercise() {
     setLoading(true);
-    await deleteExercise(props.exercise.id, router);
-    setLoading(false);
-    props.onRefresh();
+    deleteExercise(props.exercise.id, router)
+      .then(props.onRefresh)
+      .finally(() => setLoading(false));
   }
 
   async function onAddExerciseSet(exerciseSet: exerciseSet) {
     setLoading(true);
     const command: createExerciseSetCommand = { exerciseId: props.exercise.id, reps: exerciseSet.reps, quantity: exerciseSet.quantity };
-    await createExerciseSet(command, router);
-    setLoading(false);
-    props.onRefresh();
+    createExerciseSet(command, router)
+      .then(props.onRefresh)
+      .finally(() => setLoading(false));
   }
 
   async function onDeleteExerciseSet(id: UUID) {
     setLoading(true);
-    await deleteExerciseSet(id, router);
-    setLoading(false);
-    props.onRefresh();
+    deleteExerciseSet(id, router)
+      .then(props.onRefresh)
+      .finally(() => setLoading(false));
   }
 
   async function onEditExerciseSet(exerciseSetId: UUID, exerciseSet: exerciseSet) {
     setLoading(true);
     const command: updateExerciseSetCommand = { reps: exerciseSet.reps, quantity: exerciseSet.quantity };
-    await updateExerciseSet(exerciseSetId, command, router);
-    setLoading(false);
-    props.onRefresh();
+    updateExerciseSet(exerciseSetId, command, router)
+      .then(props.onRefresh)
+      .finally(() => setLoading(false));
   }
 
   async function onUpdateExerciseNumber(changeDirection: ChangeDirectionEnum) {
-    setLoading(true);
     if (props.isFirst && changeDirection === ChangeDirectionEnum.Up) return;
     else if (props.isLast && changeDirection === ChangeDirectionEnum.Down) return;
-    await updateExerciseNumber(props.exercise.id, { changeDirection }, router);
-    setLoading(false);
-    props.onRefresh();
+    setLoading(true);
+    updateExerciseNumber(props.exercise.id, { changeDirection }, router)
+      .then(props.onRefresh)
+      .finally(() => setLoading(false));
   }
 
   return (

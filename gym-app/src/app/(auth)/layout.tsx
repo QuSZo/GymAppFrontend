@@ -6,7 +6,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Link href={"/"}>GYMAPP</Link>
+        <Link href={"/"}>GYMNOTES</Link>
       </div>
       <div className={styles.left}>{children}</div>
       <div className={styles.imageWrapper}>

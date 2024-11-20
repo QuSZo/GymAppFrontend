@@ -2,7 +2,7 @@ import { commonMetadata } from "@/common/shared-metadata";
 
 export const metadata = {
   title: `Ranking | ${commonMetadata.title}`,
-  description: "Check your ranking in the GymApp community",
+  description: "Check your ranking in the GymNotes community",
 };
 
 function Ranking() {
