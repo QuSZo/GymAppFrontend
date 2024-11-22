@@ -41,21 +41,28 @@ export default function AddExerciseSetDialog(props: AddExerciseSetDialogProps) {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const minKeyboardHeight = 300;
   useEffect(() => {
-    const listener = () => {
-      const newState = window.screen.height - minKeyboardHeight > (window.visualViewport ? window.visualViewport.height : 0);
-      if (isKeyboardOpen != newState) {
-        setIsKeyboardOpen(newState);
+    const handleResize = () => {
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const screenHeight = window.screen.height;
+
+      const keyboardOpen = screenHeight - viewportHeight > minKeyboardHeight;
+
+      if (keyboardOpen !== isKeyboardOpen) {
+        setIsKeyboardOpen(keyboardOpen);
       }
     };
+
     if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", listener);
+      window.visualViewport.addEventListener("resize", handleResize);
+      handleResize();
     }
+
     return () => {
       if (window.visualViewport) {
-        window.visualViewport.removeEventListener("resize", listener);
+        window.visualViewport.removeEventListener("resize", handleResize);
       }
     };
-  }, []);
+  }, [isKeyboardOpen]);
 
   return (
     <Dialog
