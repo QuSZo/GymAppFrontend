@@ -22,25 +22,28 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps
   return (
     <div className={cn(styles.container, className)}>
       {label ? <label className={styles.label}>{label}</label> : null}
-      <input
-        ref={ref}
-        type={localType}
-        {...inputProps}
-        className={styles.input}
-        onBlur={() => setFocused(true)}
-        onFocus={() => isLastInput && setFocused(true)}
-        data-focused={focused.toString()}
-      />
-      {type === "password" && (
-        <div className={styles.iconContainer}>
-          <Icon
-            name={localType === "password" ? "visibilityOff" : "visibility"}
-            classNameSvg={styles.svg}
-            classNameIcon={styles.icon}
-            onClick={onPasswordVisibility}
-          ></Icon>
-        </div>
-      )}
+      <div className={styles.inputContainer}>
+        <input
+          ref={ref}
+          type={localType}
+          {...inputProps}
+          className={styles.input}
+          onBlur={() => setFocused(true)}
+          onFocus={() => isLastInput && setFocused(true)}
+          data-focused={focused.toString()}
+        />
+        {type === "password" && (
+          <div className={styles.iconContainer}>
+            <Icon
+              name={localType === "password" ? "visibilityOff" : "visibility"}
+              classNameSvg={styles.svg}
+              classNameIcon={styles.icon}
+              onClick={onPasswordVisibility}
+            ></Icon>
+          </div>
+        )}
+      </div>
+
       <span className={styles.error}>{errorMessage}</span>
     </div>
   );

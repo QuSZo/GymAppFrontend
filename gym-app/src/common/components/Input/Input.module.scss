@@ -5,42 +5,46 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  position: relative;
 
   .label {
     @include font-tiny;
   }
 
-  .input {
-    color: rgb($color-text);
-    background-color: rgb($color-primary);
-    border: 0;
-    padding: 10px 20px;
-    border-radius: 10px;
-    width: 100%;
+  .inputContainer {
+    position: relative;
 
-    &:invalid[data-focused="true"] {
-      border: 1px solid #ff5151;
+    .input {
+      color: rgb($color-text);
+      background-color: rgb($color-primary);
+      border: 0;
+      padding: 10px 20px;
+      border-radius: 10px;
+      width: 100%;
+
+      &:invalid[data-focused="true"] {
+        border: 1px solid #ff5151;
+      }
     }
 
-    &:invalid[data-focused="true"] ~ .error {
+    &:has(.input:invalid[data-focused="true"]) ~ .error {
       display: block;
     }
-  }
 
-  .iconContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    position: absolute;
-    right: 30px;
+    .iconContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      position: absolute;
+      right: 30px;
+      top: 0;
 
-    .svg {
-      cursor: pointer;
-      height: 18px;
-      .icon {
-        color: rgb($color-text);
+      .svg {
+        cursor: pointer;
+        height: 18px;
+        .icon {
+          color: rgb($color-text);
+        }
       }
     }
   }
