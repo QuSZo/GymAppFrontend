@@ -1,9 +1,10 @@
 import Dialog, { DialogProps } from "@/common/components/Dialog/Dialog";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import styles from "./AddOrEditExerciseSetDialog.module.scss";
 import { UUID } from "node:crypto";
+import { cn } from "@/utils/className";
 
 type AddExerciseSetDialogProps = {
   exerciseId: UUID;
@@ -37,8 +38,33 @@ export default function AddExerciseSetDialog(props: AddExerciseSetDialogProps) {
     props.onClose();
   }
 
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const minKeyboardHeight = 300;
+  useEffect(() => {
+    const listener = () => {
+      const newState = window.screen.height - minKeyboardHeight > (window.visualViewport ? window.visualViewport.height : 0);
+      if (isKeyboardOpen != newState) {
+        setIsKeyboardOpen(newState);
+      }
+    };
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", listener);
+    }
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", listener);
+      }
+    };
+  }, []);
+
   return (
-    <Dialog portalRoot={"dialog"} classNameOverflow={styles.overflow} classNameModal={styles.dialog} show={props.show} onClose={closeDialog}>
+    <Dialog
+      portalRoot={"dialog"}
+      classNameOverflow={styles.overflow}
+      classNameModal={cn(styles.dialog, isKeyboardOpen ? styles.dialogUp : undefined)}
+      show={props.show}
+      onClose={closeDialog}
+    >
       <p className={styles.dialogTitle}>Dodaj serię</p>
       <form onSubmit={onAddExerciseSet} className={styles.form}>
         <div className={styles.inputContainer}>
