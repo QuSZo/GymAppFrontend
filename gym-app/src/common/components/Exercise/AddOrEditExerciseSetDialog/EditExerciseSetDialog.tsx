@@ -1,11 +1,12 @@
 import Dialog, { DialogProps } from "@/common/components/Dialog/Dialog";
 import { Input } from "@/common/components";
 import Button from "@/common/components/Button/Button";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import styles from "./AddOrEditExerciseSetDialog.module.scss";
 import { exerciseSetDto, updateExerciseSetCommand } from "@/api/controllers/exerciseSet";
 import { UUID } from "node:crypto";
 import DeletePopover from "@/common/components/DeletePopover/DeletePopover";
+import { cn } from "@/utils/className";
 
 type EditExerciseSetDialogProps = {
   exerciseSet: exerciseSetDto;
@@ -35,9 +36,41 @@ export default function EditExerciseSetDialog(props: EditExerciseSetDialogProps)
     props.onClose();
   }
 
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const minKeyboardHeight = 300;
+  useEffect(() => {
+    const handleResize = () => {
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const screenHeight = window.screen.height;
+
+      const keyboardOpen = screenHeight - viewportHeight > minKeyboardHeight;
+
+      if (keyboardOpen !== isKeyboardOpen) {
+        setIsKeyboardOpen(keyboardOpen);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", handleResize);
+      handleResize();
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", handleResize);
+      }
+    };
+  }, [isKeyboardOpen]);
+
   return (
     <>
-      <Dialog portalRoot={"dialog"} classNameOverflow={styles.overflow} classNameModal={styles.dialog} show={props.show} onClose={closeDialog}>
+      <Dialog
+        portalRoot={"dialog"}
+        classNameOverflow={styles.overflow}
+        classNameModal={cn(styles.dialog, isKeyboardOpen ? styles.dialogUp : undefined)}
+        show={props.show}
+        onClose={closeDialog}
+      >
         <p className={styles.dialogTitle}>Edytuj serię</p>
         <form onSubmit={onEditExerciseSet} className={styles.form}>
           <div className={styles.inputContainer}>
